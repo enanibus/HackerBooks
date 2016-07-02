@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+//MARK: - JSON Properties
+enum JSONDictionaryKeys: String{
+    case AUTHORS = "authors"
+    case IMAGE_URL  = "image_url"
+    case PDF_URL = "pdf_url"
+    case TAGS = "tags"
+    case TITLE = "title"
+}
+
+
+

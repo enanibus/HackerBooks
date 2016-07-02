@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+// MARK: -  JSON Errors
+enum HacerBooksError : ErrorType{
+    case wrongURLFormatForJSONResource
+    case resourcePointedByURLNotReachable
+    case jsonParsingError
+    case wrongJSONFormat
+    case nilJSONObject
+}

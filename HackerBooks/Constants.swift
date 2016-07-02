@@ -8,4 +8,5 @@
 
 import Foundation
 
-public let URL_LIBRARY_SOURCE = "https://t.co/K9ziV0z3SJ"
+public let SOURCE_LIBRARY_URL       = "https://t.co/K9ziV0z3SJ"
+public let SOURCE_LIBRARY_LOCAL     = ""

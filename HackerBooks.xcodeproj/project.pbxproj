@@ -24,6 +24,7 @@
 		0AAEB54F1D24B46B00DF0699 /* SimplePDFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEB54D1D24B46B00DF0699 /* SimplePDFViewController.xib */; };
 		0AAEB5511D24B49200DF0699 /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEB5501D24B49200DF0699 /* LibraryTableViewController.swift */; };
 		0AAEB5561D24B79F00DF0699 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEB5551D24B79F00DF0699 /* Constants.swift */; };
+		0AAEB5581D25AF9A00DF0699 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEB5571D25AF9A00DF0699 /* Foundation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		0AAEB54D1D24B46B00DF0699 /* SimplePDFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimplePDFViewController.xib; sourceTree = "<group>"; };
 		0AAEB5501D24B49200DF0699 /* LibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
 		0AAEB5551D24B79F00DF0699 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0AAEB5571D25AF9A00DF0699 /* Foundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +119,6 @@
 		0AAEB4F01D1CA5DA00DF0699 /* HackerBooks */ = {
 			isa = PBXGroup;
 			children = (
-				0AAEB5541D24B78200DF0699 /* Support */,
 				0AAEB5521D24B5D400DF0699 /* Views */,
 				0AAEB52A1D22F29900DF0699 /* Controllers */,
 				0AAEB52C1D22F2A800DF0699 /* Resources */,
@@ -165,8 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				0AAEB53E1D23631600DF0699 /* Book.swift */,
-				0AAEB5401D23632200DF0699 /* Library.swift */,
 				0AAEB5421D23632E00DF0699 /* Tag.swift */,
+				0AAEB5401D23632200DF0699 /* Library.swift */,
+				0AAEB5551D24B79F00DF0699 /* Constants.swift */,
 				0AAEB5441D23639B00DF0699 /* Errors.swift */,
 				0AAEB5461D24A38800DF0699 /* JSONProcessing.swift */,
 			);
@@ -184,6 +186,7 @@
 		0AAEB52D1D22F2B500DF0699 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0AAEB5571D25AF9A00DF0699 /* Foundation.swift */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,14 +196,6 @@
 			children = (
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		0AAEB5541D24B78200DF0699 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				0AAEB5551D24B79F00DF0699 /* Constants.swift */,
-			);
-			name = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +338,7 @@
 				0AAEB54A1D24B42700DF0699 /* BookViewController.swift in Sources */,
 				0AAEB5561D24B79F00DF0699 /* Constants.swift in Sources */,
 				0AAEB53F1D23631600DF0699 /* Book.swift in Sources */,
+				0AAEB5581D25AF9A00DF0699 /* Foundation.swift in Sources */,
 				0AAEB5511D24B49200DF0699 /* LibraryTableViewController.swift in Sources */,
 				0AAEB4F21D1CA5DA00DF0699 /* AppDelegate.swift in Sources */,
 				0AAEB5411D23632200DF0699 /* Library.swift in Sources */,
