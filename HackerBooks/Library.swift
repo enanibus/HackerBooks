@@ -90,15 +90,20 @@ class Library {
                 do{
                     let eachBook = try decode(book: eachDict)
                     bookArray.append(eachBook)
+                    for eachTag in eachBook.tags{
+                        self.dict[eachTag]?.append(eachBook)
+                    }
                 }catch{
                     print("Error al procesar \(eachDict)")
                 }
             }
             
             print(bookArray.description)
+//            loadDictionary(withBookArray: bookArray)
             
-            loadDictionary(withBookArray: bookArray)
-            
+            for (key, value) in self.dict {
+                print("Dictionary key \(key) -  Dictionary value \(value)")
+            }
             print(self.dict)
             
         }catch{
@@ -187,9 +192,6 @@ class Library {
             for eachTag in eachBook.tags{
                 self.dict[eachTag]?.append(eachBook)
             }
-        }
-        for (key, value) in self.dict {
-            print("Dictionary key \(key) -  Dictionary value \(value)")
         }
     }
 }
