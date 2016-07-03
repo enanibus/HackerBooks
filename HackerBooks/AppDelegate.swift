@@ -23,31 +23,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Mirar si es la primera vez que se arranca la aplicación
         // Esto se hace con User defaults
         
-         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: "https://t.co/K9ziV0z3SJ"]]
         
         // crear una instancia de modelo
-        do{
-            var json = try loadFromLocalFile(fileName: "books_readable.json")
-//            json.appendContentsOf(try loadFromLocalFile(fileName: "forceSensitives.json"))
-            print(json)
-            
-            var books = [Book]()
-            for dict in json{
-                do{
-                    let book = try decode(book: dict)
-                    books.append(book)
-                }catch{
-                    print("Error al procesar \(dict)")
-                }
-                
-            }
-            
-            print(books.description)
-            
+        // let data = NSData(contentsOfURL: NSURL(string: "https://t.co/K9ziV0z3SJ")!)
+        
+        
+//        do{
+//            let json = try loadFromURL()
+//            print(json)
+//            
+//            var books = [Book]()
+//            for dict in json{
+//                do{
+//                    let book = try decode(book: dict)
+//                    books.append(book)
+//                }catch{
+//                    print("Error al procesar \(dict)")
+//                }
+//                
+//            }
+//
+//            print(books.description)
+//
+//            var dicc = [Tag : [Book]]()
+//            for eachBook in books{
+//                for eachTag in eachBook.tags{
+//                    dicc[eachTag]?.append(eachBook)
+//                }
+//            }
+        
+//            
+//        for (key, value) in dicc {
+//            print("Dictionary key \(key) -  Dictionary value \(value)")
+//        }
+        
             // Podemos crear el modelo
             //let model = StarWarsUniverse(characters: chars)
-            let model = Library(library: books)
-            
+            let model = Library()
             // Crear un VC
 //            let uVC = UniverseViewController(model: model)
             
@@ -75,9 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             return true
             
-        }catch{
-            fatalError("Error while loading JSON")
-        }
+//        }catch{
+//            fatalError("Error while loading JSON")
+//        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

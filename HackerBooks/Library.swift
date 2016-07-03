@@ -49,20 +49,64 @@ class Library {
     }
     
     //MARK: - Initialization
-    init(library booksArray: BookArray){
-        
-        // Crear un diccionario vacio
-        dict = makeEmptyDictionary()
-        
-        // Nos pateamos el array de libros en bruto y asignamos
-        // tantos libros como tags tenga el libro
-        for eachBook in booksArray{
-            for eachTag in eachBook.tags{
-                self.dict[eachTag]?.append(eachBook)
+//    init(library booksArray: BookArray){
+//
+//        dict = makeEmptyDictionary()
+//        
+//        for eachBook in booksArray{
+//            for eachTag in eachBook.tags{
+//                self.dict[eachTag]?.append(eachBook)
+//            }
+//        }
+//    }
+//    
+//    init(library jsonArray: JSONArray){
+//        
+//        dict = makeEmptyDictionary()
+//        var books = [Book]()
+//        
+//        for eachDict in jsonArray{
+//            do{
+//                let eachBook = try decode(book: eachDict)
+//                books.append(eachBook)
+//                for eachTag in eachBook.tags{
+//                    self.dict[eachTag]?.append(eachBook)
+//                }
+//            }catch{
+//                print("Error al procesar \(eachDict)")
+//            }
+//        }
+//    }
+    
+    init(){
+
+        do{
+            let json = try loadFromURL()
+            print(json)
+            
+            var bookArray = BookArray()
+            
+            for eachDict in json{
+                do{
+                    let eachBook = try decode(book: eachDict)
+                    bookArray.append(eachBook)
+                }catch{
+                    print("Error al procesar \(eachDict)")
+                }
             }
+            
+            print(bookArray.description)
+            
+            loadDictionary(withBookArray: bookArray)
+            
+            print(self.dict)
+            
+        }catch{
+            print("Error en la carga de JSON")
         }
         
     }
+    
     
     //MARK: - Library methods
     
@@ -134,6 +178,19 @@ class Library {
     func makeEmptyDictionary() ->  BookDictionary {
         
         return BookDictionary()
+    }
+    
+    func loadDictionary(withBookArray bookArray: BookArray){
+        
+        //self.dict = makeEmptyDictionary()
+        for eachBook in bookArray{
+            for eachTag in eachBook.tags{
+                self.dict[eachTag]?.append(eachBook)
+            }
+        }
+        for (key, value) in self.dict {
+            print("Dictionary key \(key) -  Dictionary value \(value)")
+        }
     }
 }
 
