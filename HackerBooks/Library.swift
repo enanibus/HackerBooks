@@ -90,7 +90,10 @@ class Library {
                 do{
                     let eachBook = try decode(book: eachDict)
                     bookArray.append(eachBook)
+                    print(eachBook.description)
                     for eachTag in eachBook.tags{
+                        print(eachTag.description)
+                        let tag = eachTag
                         self.dict[eachTag]?.append(eachBook)
                     }
                 }catch{
@@ -98,7 +101,7 @@ class Library {
                 }
             }
             
-            print(bookArray.description)
+//            print(bookArray.description)
 //            loadDictionary(withBookArray: bookArray)
             
             for (key, value) in self.dict {
