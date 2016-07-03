@@ -16,7 +16,7 @@ class Tag : Comparable, Hashable {
     //MARK: - Computed properties
     var isFavorite : Bool{
         get{
-            return name == "Favorites"
+            return name == FAVORITES
         }
     }
     
@@ -36,7 +36,7 @@ class Tag : Comparable, Hashable {
     
     //MARK: - Class methods
     class func favoriteBookTag()->Tag{
-        return Tag(withName: "Favorites")
+        return Tag(withName: FAVORITES)
     }
     
     //MARK: - Proxies

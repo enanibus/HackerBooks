@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: -  JSON Errors
-enum HacerBooksError : ErrorType{
+enum HackerBooksError : ErrorType{
     case wrongURLFormatForJSONResource
     case resourcePointedByURLNotReachable
     case jsonParsingError

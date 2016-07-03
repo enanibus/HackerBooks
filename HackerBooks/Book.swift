@@ -24,7 +24,7 @@ class Book : Comparable {
         }
         set{
             if newValue {
-                self.tags.insert(Tag(withName: "Favorites"), atIndex: 0)
+                self.tags.insert(Tag(withName: FAVORITES), atIndex: 0)
             }else{
                 self.tags.removeAtIndex(0)
             }
@@ -101,7 +101,7 @@ extension Book : CustomStringConvertible{
         
     var description: String {
         get{
-            return "<\(self.dynamicType)\(title) -- \(authors) -- \(tags)>"
+            return "<\(self.dynamicType): \(title) -- \(authors) -- \(tags)>"
         }
     }
 }

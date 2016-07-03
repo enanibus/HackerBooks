@@ -34,25 +34,49 @@ class Library {
         }
     }
     
+    // Número de etiquetas
+    var tagsCount : Int{
+        get{
+            return self.dict.count
+        }
+    }
+    
     // Número total de libros
     var booksCount: Int{
         get{
             return self.books.count
         }
     }
-        
+    
     //MARK: - Initialization
+    init(library booksArray: BookArray){
         
+        // Crear un diccionario vacio
+        dict = makeEmptyDictionary()
+        
+        // Nos pateamos el array de libros en bruto y asignamos
+        // tantos libros como tags tenga el libro
+        for eachBook in booksArray{
+            for eachTag in eachBook.tags{
+                self.dict[eachTag]?.append(eachBook)
+            }
+        }
+        
+    }
+    
+    //MARK: - Library methods
+    
     // Cantidad de libros que hay en una temática.
     // Si el tag no existe, debe devolver cero
-    func bookCountForTag (tag: Tag) -> Int{
-        guard let count = self.dict[tag]?.count else{
-            return 0
+    func bookCountForTag (tag: Tag?) -> Int{
+        if let tagName = tag {
+            return self.dict[tagName]!.count
         }
-        return count
+        return 0
     }
-        
-    // Array de los libros (instancias de Book) que hay en 
+    
+
+    // Array de los libros (instancias de Book) que hay en
     // una temática.
     // Un libro puede estar en una o más temáticas. Si no hay
     // libros para una temática, ha de devolver nil
@@ -78,23 +102,40 @@ class Library {
         return book
 
     }
-
     
-
-
+    // Tag name: return tag's name
+    func tagName(tag: Tag) -> String{
+        return tag.name
+    }
     
     
-    //MARK: - Proxies
-
+    //MARK: - CRUD(C,D) + notificaciones de cambios en el modelo
+    
+    //Añadir libro a la etiqueta
+    func addBookForTag(book: Book, tag: Tag) {
+        
+        self.dict[tag]?.append(book)
+        
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: LIBRARY_DID_CHANGE_NOTIFICATION, object: nil))
+    }
+    
+    
+    // Elimina libro de la etiqueta
+    func removeBookForTag(book: Book, tag: Tag) {
+        
+        self.dict[tag]?.removeAtIndex((dict[tag]?.indexOf(book))!)
+        
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: LIBRARY_DID_CHANGE_NOTIFICATION, object: nil))
+    }
+    
     
     //MARK: - Utils
     
-
-
+    func makeEmptyDictionary() ->  BookDictionary {
+        
+        return BookDictionary()
+    }
 }
-
-//MARK: - Equatable & Comparable
-//utilizamos el patron de diseño proxy (representante)
 
 
 //MARK: - Extensiones

@@ -169,8 +169,8 @@
 				0AAEB5421D23632E00DF0699 /* Tag.swift */,
 				0AAEB5401D23632200DF0699 /* Library.swift */,
 				0AAEB5551D24B79F00DF0699 /* Constants.swift */,
-				0AAEB5441D23639B00DF0699 /* Errors.swift */,
 				0AAEB5461D24A38800DF0699 /* JSONProcessing.swift */,
+				0AAEB5441D23639B00DF0699 /* Errors.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";

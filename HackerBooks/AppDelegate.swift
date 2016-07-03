@@ -16,7 +16,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        
+        // Crear window
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        // Mirar si es la primera vez que se arranca la aplicación
+        // Esto se hace con User defaults
+        
+         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString: "https://t.co/K9ziV0z3SJ"]]
+        
+        // crear una instancia de modelo
+        do{
+            var json = try loadFromLocalFile(fileName: "books_readable.json")
+//            json.appendContentsOf(try loadFromLocalFile(fileName: "forceSensitives.json"))
+            print(json)
+            
+            var books = [Book]()
+            for dict in json{
+                do{
+                    let book = try decode(book: dict)
+                    books.append(book)
+                }catch{
+                    print("Error al procesar \(dict)")
+                }
+                
+            }
+            
+            print(books.description)
+            
+            // Podemos crear el modelo
+            //let model = StarWarsUniverse(characters: chars)
+            let model = Library(library: books)
+            
+            // Crear un VC
+//            let uVC = UniverseViewController(model: model)
+            
+            // Lo metemos en un Nav
+//            let uNav = UINavigationController(rootViewController: uVC)
+            
+            //creamos character VC
+//            let charVC = CharacterViewController(model: model.character(atIndex: 0, forAffiliation: .galacticEmpire))
+            
+            //meterlo en otro navVC
+//            let charNav = UINavigationController(rootViewController: charVC)
+            
+            //crear el split view
+//            let splitVC = UISplitViewController()
+//            splitVC.viewControllers = [uNav, charNav]
+//            
+            //poner el split como VC
+            
+//            window?.rootViewController = splitVC
+            
+            // Asignar delegados
+//            uVC.delegate = charVC
+            
+            window?.makeKeyAndVisible()
+
+            return true
+            
+        }catch{
+            fatalError("Error while loading JSON")
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
