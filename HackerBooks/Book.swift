@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Book : Comparable {
+class Book : Comparable, Hashable {
     
     //MARK: - Stored properties
     let title       : String
     let authors     : [String]
-    var tags        : [Tag]
+    var tags        : [String]
     let imageURL    : NSURL
     let pdfURL      : NSURL
     
@@ -24,18 +24,23 @@ class Book : Comparable {
         }
         set{
             if newValue {
-                self.tags.insert(Tag(withName: FAVORITES), atIndex: 0)
+                self.tags.insert(Tag(withName: FAVORITES).name, atIndex: 0)
             }else{
                 self.tags.removeAtIndex(0)
             }
         }
     }
-
+    
+    
+    //MARK: - Hashable
+    var hashValue: Int {
+        return title.hashValue
+    }
 
     //MARK: - Initialization
     init(title : String,
          authors : [String],
-         tags : [Tag],
+         tags : [String],
          imageURL : NSURL,
          pdfURL : NSURL){
         self.title = title
@@ -62,7 +67,7 @@ class Book : Comparable {
     //MARK: - Utils
     
     func hasFavoriteTag()->Bool{
-        return self.tags.contains(Tag.favoriteBookTag())
+        return self.tags.contains(Tag.favoriteBookTag().name)
     }
     
     func listOfAuthors()->String{
@@ -70,7 +75,7 @@ class Book : Comparable {
     }
     
     func listOfTags()->String{
-        return self.tags.flatMap { $0.name }.joinWithSeparator(", ")
+        return self.tags.flatMap { $0 }.joinWithSeparator(", ")
     }
     
     

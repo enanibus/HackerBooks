@@ -11,18 +11,22 @@ import Foundation
 class Library {
 
     //MARK: Utility types
-    typealias TagArray              =   [Tag]
+    typealias TagArray              =   [String]
     typealias BookArray             =   [Book]
-    typealias BookDictionary        =   [Tag : BookArray]
+    typealias BookSet               =   Set<Book>
+    typealias BookDictionary        =   [String : BookSet]
     
     //MARK: - Stored properties
     var dict : BookDictionary = BookDictionary()
 
     //MARK: - Computed properties
     // Array de libros: método get devuelve los libros ordenados por título
-    var books: BookArray{
+    var books : BookArray{
         get{
             return self.books.sort({$0.title < $1.title})
+        }
+        set{
+            newValue
         }
     }
     
@@ -49,70 +53,48 @@ class Library {
     }
     
     //MARK: - Initialization
-//    init(library booksArray: BookArray){
-//
-//        dict = makeEmptyDictionary()
-//        
-//        for eachBook in booksArray{
-//            for eachTag in eachBook.tags{
-//                self.dict[eachTag]?.append(eachBook)
-//            }
-//        }
-//    }
-//    
-//    init(library jsonArray: JSONArray){
-//        
-//        dict = makeEmptyDictionary()
-//        var books = [Book]()
-//        
-//        for eachDict in jsonArray{
-//            do{
-//                let eachBook = try decode(book: eachDict)
-//                books.append(eachBook)
-//                for eachTag in eachBook.tags{
-//                    self.dict[eachTag]?.append(eachBook)
-//                }
-//            }catch{
-//                print("Error al procesar \(eachDict)")
-//            }
-//        }
-//    }
     
     init(){
 
         do{
-            let json = try loadFromURL()
+            let jsonArray = try loadFromURL()
 //            print(json)
             
-            var bookArray = BookArray()
+//            var bookArray = BookArray()
             
-            for eachDict in json{
-                do{
-                    let eachBook = try decode(book: eachDict)
-                    bookArray.append(eachBook)
-//                    print(eachBook.description)
-                    for eachTag in eachBook.tags{
-//                        print(eachTag.description)
-                        var booksWithTag = BookArray()
-                        self.dict[eachTag] = booksWithTag
-                        booksWithTag.append(eachBook)
-                        self.dict[eachTag] = booksWithTag
-//                        self.dict[eachTag]?.append(eachBook)
-                    }
-                }catch{
-                    print("Error al procesar \(eachDict)")
-                }
-            }
+            try initLibrary(withJSONArray: jsonArray)
+            
+//            for eachDict in json{
+//                do{
+//                    let eachBook = try decode(book: eachDict)
+//
+//                    for eachTag in eachBook.tags{
+//                        var booksWithTag = BookSet()
+//                        if let hasTags = self.dict[eachTag]{
+//                            booksWithTag = hasTags
+//                        }
+//                        booksWithTag.insert(eachBook)
+//                        self.dict[eachTag] = booksWithTag
+//                    }
+//                    
+//                }catch{
+//                    print("Error al procesar \(eachDict)")
+//                }
+//            }
             
 //            print(bookArray.description)
 //            loadDictionary(withBookArray: bookArray)
             
-            print(self.dict.keys)
-            print(self.dict.count)
-            for (key, value) in self.dict {
-                print("Dictionary key \(key) -  Dictionary value \(value)")
-            }
+//            print(self.dict.count)
+//            print(bookCountForTag("java"))
+//            print(bookCountForTag("javascript"))
+//            print(bookCountForTag("programming"))
 //            print(self.dict)
+
+//            for (key, value) in self.dict {
+//                print("Dictionary key \(key) -  Dictionary value \(value)")
+//            }
+
             
         }catch{
             print("Error en la carga de JSON")
@@ -125,7 +107,7 @@ class Library {
     
     // Cantidad de libros que hay en una temática.
     // Si el tag no existe, debe devolver cero
-    func bookCountForTag (tag: Tag?) -> Int{
+    func bookCountForTag (tag: String?) -> Int{
         if let tagName = tag {
             return self.dict[tagName]!.count
         }
@@ -137,11 +119,12 @@ class Library {
     // una temática.
     // Un libro puede estar en una o más temáticas. Si no hay
     // libros para una temática, ha de devolver nil
-    func booksForTag (tag: Tag?) -> [Book]?{
+    func booksForTag (tag: String?) -> BookSet?{
         guard !(bookCountForTag(tag!) == 0) else{
             return nil
         }
         return self.dict[tag!]
+
     }
         
     // Un Book para el libro que está en la posición 
@@ -151,12 +134,10 @@ class Library {
     // devuelve nil
     // Devolverá, si todo va bien, el libro nº index de la etiqueta tag
     func bookAtIndex(index: Int,
-                     forTag tag: Tag) -> Book?{
+                     forTag tag: String?) -> Book?{
         
         let books = self.booksForTag(tag)
-        let book = books![index]
-        
-        return book
+        return books![(books?.startIndex.advancedBy(index))!]
 
     }
     
@@ -169,16 +150,16 @@ class Library {
     //MARK: - CRUD(C,D) + notificaciones de cambios en el modelo
     
     //Añadir libro a la etiqueta
-    func addBookForTag(book: Book, tag: Tag) {
+    func addBookForTag(book: Book, tag: String) {
         
-        self.dict[tag]?.append(book)
+        self.dict[tag]?.insert(book)
         
         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: LIBRARY_DID_CHANGE_NOTIFICATION, object: nil))
     }
     
     
     // Elimina libro de la etiqueta
-    func removeBookForTag(book: Book, tag: Tag) {
+    func removeBookForTag(book: Book, tag: String) {
         
         self.dict[tag]?.removeAtIndex((dict[tag]?.indexOf(book))!)
         
@@ -193,15 +174,41 @@ class Library {
         return BookDictionary()
     }
     
-    func loadDictionary(withBookArray bookArray: BookArray){
+    func initLibrary (withJSONArray jsonArray: JSONArray) throws{
         
-        //self.dict = makeEmptyDictionary()
-        for eachBook in bookArray{
-            for eachTag in eachBook.tags{
-                self.dict[eachTag]?.append(eachBook)
+        self.books = BookArray()
+        
+        for eachDict in jsonArray{
+            do{
+                let eachBook = try decode(book: eachDict)
+                
+                self.books.append(eachBook)
+    
+                for eachTag in eachBook.tags{
+                    var booksWithTag = BookSet()
+                    if let hasTags = self.dict[eachTag]{
+                        booksWithTag = hasTags
+                    }
+                    booksWithTag.insert(eachBook)
+                    self.dict[eachTag]? = booksWithTag
+                }
+    
+            }catch{
+                    throw HackerBooksError.jsonParsingError
             }
         }
+    
+        print(self.dict.count)
+        print(bookCountForTag("java"))
+        print(bookCountForTag("javascript"))
+        print(bookCountForTag("programming"))
+        //            print(self.dict)
+    
+        for (key, value) in self.dict {
+        print("Dictionary key \(key) -  Dictionary value \(value)")
+        }
     }
+    
 }
 
 
