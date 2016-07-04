@@ -176,13 +176,13 @@ class Library {
     
     func initLibrary (withJSONArray jsonArray: JSONArray) throws{
         
-        self.books = BookArray()
+//        self.books = BookArray()
         
         for eachDict in jsonArray{
             do{
                 let eachBook = try decode(book: eachDict)
                 
-                self.books.append(eachBook)
+//                self.books.append(eachBook)
     
                 for eachTag in eachBook.tags{
                     var booksWithTag = BookSet()
@@ -190,7 +190,7 @@ class Library {
                         booksWithTag = hasTags
                     }
                     booksWithTag.insert(eachBook)
-                    self.dict[eachTag]? = booksWithTag
+                    self.dict[eachTag] = booksWithTag
                 }
     
             }catch{
