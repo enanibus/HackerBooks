@@ -13,7 +13,7 @@ class Book : Comparable, Hashable {
     //MARK: - Stored properties
     let title       : String
     let authors     : [String]
-    var tags        : [String]
+    var tags        : [Tag]
     let imageURL    : NSURL
     let pdfURL      : NSURL
     
@@ -24,7 +24,7 @@ class Book : Comparable, Hashable {
         }
         set{
             if newValue {
-                self.tags.insert(Tag(withName: FAVORITES).name, atIndex: 0)
+                self.tags.insert(Tag(withName: FAVORITES), atIndex: 0)
             }else{
                 self.tags.removeAtIndex(0)
             }
@@ -40,7 +40,7 @@ class Book : Comparable, Hashable {
     //MARK: - Initialization
     init(title : String,
          authors : [String],
-         tags : [String],
+         tags : [Tag],
          imageURL : NSURL,
          pdfURL : NSURL){
         self.title = title
@@ -67,7 +67,7 @@ class Book : Comparable, Hashable {
     //MARK: - Utils
     
     func hasFavoriteTag()->Bool{
-        return self.tags.contains(Tag.favoriteBookTag().name)
+        return self.tags.contains(Tag.favoriteBookTag())
     }
     
     func listOfAuthors()->String{
@@ -75,7 +75,7 @@ class Book : Comparable, Hashable {
     }
     
     func listOfTags()->String{
-        return self.tags.flatMap { $0 }.joinWithSeparator(", ")
+        return self.tags.flatMap { $0.name }.joinWithSeparator(", ")
     }
     
     

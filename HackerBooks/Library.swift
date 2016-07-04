@@ -11,22 +11,23 @@ import Foundation
 class Library {
 
     //MARK: Utility types
-    typealias TagArray              =   [String]
+    typealias TagArray              =   [Tag]
     typealias BookArray             =   [Book]
     typealias BookSet               =   Set<Book>
-    typealias BookDictionary        =   [String : BookSet]
+    typealias BookDictionary        =   [Tag : BookSet]
     
     //MARK: - Stored properties
-    var dict : BookDictionary = BookDictionary()
+    var dict        : BookDictionary = BookDictionary()
+    var booksArray  : BookArray = BookArray()
 
     //MARK: - Computed properties
     // Array de libros: método get devuelve los libros ordenados por título
     var books : BookArray{
         get{
-            return self.books.sort({$0.title < $1.title})
+            return self.booksArray.sort({$0.title < $1.title})
         }
         set{
-            newValue
+            booksArray = newValue
         }
     }
     
@@ -107,7 +108,7 @@ class Library {
     
     // Cantidad de libros que hay en una temática.
     // Si el tag no existe, debe devolver cero
-    func bookCountForTag (tag: String?) -> Int{
+    func bookCountForTag (tag: Tag?) -> Int{
         if let tagName = tag {
             return self.dict[tagName]!.count
         }
@@ -119,7 +120,7 @@ class Library {
     // una temática.
     // Un libro puede estar en una o más temáticas. Si no hay
     // libros para una temática, ha de devolver nil
-    func booksForTag (tag: String?) -> BookSet?{
+    func booksForTag (tag: Tag?) -> BookSet?{
         guard !(bookCountForTag(tag!) == 0) else{
             return nil
         }
@@ -134,7 +135,7 @@ class Library {
     // devuelve nil
     // Devolverá, si todo va bien, el libro nº index de la etiqueta tag
     func bookAtIndex(index: Int,
-                     forTag tag: String?) -> Book?{
+                     forTag tag: Tag?) -> Book?{
         
         let books = self.booksForTag(tag)
         return books![(books?.startIndex.advancedBy(index))!]
@@ -150,7 +151,7 @@ class Library {
     //MARK: - CRUD(C,D) + notificaciones de cambios en el modelo
     
     //Añadir libro a la etiqueta
-    func addBookForTag(book: Book, tag: String) {
+    func addBookForTag(book: Book, tag: Tag) {
         
         self.dict[tag]?.insert(book)
         
@@ -159,7 +160,7 @@ class Library {
     
     
     // Elimina libro de la etiqueta
-    func removeBookForTag(book: Book, tag: String) {
+    func removeBookForTag(book: Book, tag: Tag) {
         
         self.dict[tag]?.removeAtIndex((dict[tag]?.indexOf(book))!)
         
@@ -176,13 +177,13 @@ class Library {
     
     func initLibrary (withJSONArray jsonArray: JSONArray) throws{
         
-//        self.books = BookArray()
+        self.booksArray = BookArray()
         
         for eachDict in jsonArray{
             do{
                 let eachBook = try decode(book: eachDict)
                 
-//                self.books.append(eachBook)
+                self.booksArray.append(eachBook)
     
                 for eachTag in eachBook.tags{
                     var booksWithTag = BookSet()
@@ -199,14 +200,15 @@ class Library {
         }
     
         print(self.dict.count)
-        print(bookCountForTag("java"))
-        print(bookCountForTag("javascript"))
-        print(bookCountForTag("programming"))
-        //            print(self.dict)
-    
+//        print(self.dict)
+        print ("-------------")
         for (key, value) in self.dict {
         print("Dictionary key \(key) -  Dictionary value \(value)")
         }
+        print ("-------------")
+        print(self.books.description)
+        print ("-------------")
+        print(self.tags.description)
     }
     
 }

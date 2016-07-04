@@ -94,11 +94,12 @@ func authorsStringToArray(string: String)->[String]{
 
 //Conversión "tagsString" en [Tag]
 
-func tagsStringToArray(string: String)->[String]{
+func tagsStringToArray(string: String)->[Tag]{
     let tags = string.componentsSeparatedByString(",")
-    var tagsArray = [String]()
+    var tagsArray = [Tag]()
     for eachTagString in tags{
-        tagsArray.append(eachTagString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+        let tag = Tag(withName: eachTagString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+        tagsArray.append(tag)
     }
     return tagsArray
 }
