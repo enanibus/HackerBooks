@@ -82,7 +82,7 @@ class Library {
 
         do{
             let json = try loadFromURL()
-            print(json)
+//            print(json)
             
             var bookArray = BookArray()
             
@@ -90,11 +90,14 @@ class Library {
                 do{
                     let eachBook = try decode(book: eachDict)
                     bookArray.append(eachBook)
-                    print(eachBook.description)
+//                    print(eachBook.description)
                     for eachTag in eachBook.tags{
-                        print(eachTag.description)
-                        let tag = eachTag
-                        self.dict[eachTag]?.append(eachBook)
+//                        print(eachTag.description)
+                        var booksWithTag = BookArray()
+                        self.dict[eachTag] = booksWithTag
+                        booksWithTag.append(eachBook)
+                        self.dict[eachTag] = booksWithTag
+//                        self.dict[eachTag]?.append(eachBook)
                     }
                 }catch{
                     print("Error al procesar \(eachDict)")
@@ -104,10 +107,12 @@ class Library {
 //            print(bookArray.description)
 //            loadDictionary(withBookArray: bookArray)
             
+            print(self.dict.keys)
+            print(self.dict.count)
             for (key, value) in self.dict {
                 print("Dictionary key \(key) -  Dictionary value \(value)")
             }
-            print(self.dict)
+//            print(self.dict)
             
         }catch{
             print("Error en la carga de JSON")
