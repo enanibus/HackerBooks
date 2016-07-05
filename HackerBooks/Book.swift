@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Book : Comparable, Hashable {
     
@@ -28,6 +29,12 @@ class Book : Comparable, Hashable {
             }else{
                 self.tags.removeAtIndex(0)
             }
+        }
+    }
+    
+    var photo : UIImage{
+        get{
+            return UIImage(data: NSData(contentsOfURL: self.imageURL)!)!
         }
     }
     

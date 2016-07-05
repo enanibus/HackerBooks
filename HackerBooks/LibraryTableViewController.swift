@@ -72,7 +72,7 @@ class LibraryTableViewController: UITableViewController {
         }
         
         // Sincronizar book -> celda
-//        cell?.imageView?.image = item.imageURL
+        cell?.imageView?.image = item.photo
         cell?.textLabel?.text  = item.title
         cell?.detailTextLabel?.text = item.listOfAuthors()
 
