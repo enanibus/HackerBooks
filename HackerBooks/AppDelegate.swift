@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            
             //poner el split como VC
             
-            window?.rootViewController = libVC
+            window?.rootViewController = libNav
         
             // Asignar delegados
 //            uVC.delegate = charVC

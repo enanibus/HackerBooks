@@ -20,7 +20,6 @@ class LibraryTableViewController: UITableViewController {
     //MARK: - Initialization
     init(model: Library){
         self.model = model
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,6 +29,7 @@ class LibraryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "HackerBooks"
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -81,7 +81,7 @@ class LibraryTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return model.tags[section].name
+        return model.tags[section].name.capitalizedString
     }
     
 
