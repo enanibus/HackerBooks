@@ -8,7 +8,25 @@
 
 import UIKit
 
+let DidChangeNotification = "Selected Book did change"
+let BookKey = "key"
+
 class LibraryTableViewController: UITableViewController {
+    
+    //MARK: - Properties
+    let model : Library
+//    var delegate : LibraryTableViewControllerDelegate
+    
+    //MARK: - Initialization
+    init(model: Library){
+        self.model = model
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,24 +46,44 @@ class LibraryTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return model.tagsCount
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return model.bookCountForTag(model.tags[section])
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
-        // Configure the cell...
+        // Tipo de celda
+        let cellId = "BookCell"
+        
+        // Averiguar el libro
+        let item = book(forIndexPath: indexPath)
+        
+        // Crear la celda
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
+        
+        if cell == nil{
+            // El optional está vacío: hay que crearla a pelo
+            cell = UITableViewCell(style: .Subtitle,
+                                   reuseIdentifier: cellId)
+        }
+        
+        // Sincronizar book -> celda
+//        cell?.imageView?.image = item.imageURL
+        cell?.textLabel?.text  = item.title
+        cell?.detailTextLabel?.text = item.listOfAuthors()
 
-        return cell
+        return cell!
     }
-    */
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return model.tags[section].name
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -91,5 +129,15 @@ class LibraryTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func book(forIndexPath indexPath: NSIndexPath)->Book{
+        
+        return model.bookAtIndex(indexPath.row, forTag: model.tags[indexPath.section])!
+    }
 
 }
+
+//protocol LibraryTableViewControllerDelegate {
+//    
+//    func libraryTableViewController(vc : LibraryTableViewController, didSelectCharacter character: Book)
+//}
