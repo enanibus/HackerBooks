@@ -18,6 +18,19 @@ class Book : Comparable, Hashable {
     let imageURL    : NSURL
     let pdfURL      : NSURL
     
+    var photo : UIImage?{
+        get{
+            return UIImage(data: NSData(contentsOfURL: self.imageURL)!)!
+        }
+    }
+    
+    var pdf : NSData?{
+        get{
+            return NSData(contentsOfURL: self.pdfURL)
+        }
+    }
+    
+    
     //MARK: - Computed properties
     var isFavorite  : Bool{
         get{
@@ -29,12 +42,6 @@ class Book : Comparable, Hashable {
             }else{
                 self.tags.removeAtIndex(0)
             }
-        }
-    }
-    
-    var photo : UIImage{
-        get{
-            return UIImage(data: NSData(contentsOfURL: self.imageURL)!)!
         }
     }
     
@@ -113,7 +120,7 @@ extension Book : CustomStringConvertible{
         
     var description: String {
         get{
-            return "<\(self.dynamicType): \(title) -- \(authors) -- \(tags)>"
+            return "<\(self.dynamicType): \(title) -- \(authors) -- \(tags) -- \(imageURL) -- \(pdfURL)>"
         }
     }
 }

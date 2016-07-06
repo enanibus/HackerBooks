@@ -482,7 +482,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HackerBooks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.KeepCoding.HackerBooks;
+				PRODUCT_BUNDLE_IDENTIFIER = enanibus.HackerBooks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -496,7 +496,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HackerBooks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.KeepCoding.HackerBooks;
+				PRODUCT_BUNDLE_IDENTIFIER = enanibus.HackerBooks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -567,6 +567,7 @@
 				0AAEB5181D1CA5DA00DF0699 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0AAEB5191D1CA5DA00DF0699 /* Build configuration list for PBXNativeTarget "HackerBooksTests" */ = {
 			isa = XCConfigurationList;
@@ -575,6 +576,7 @@
 				0AAEB51B1D1CA5DA00DF0699 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0AAEB51C1D1CA5DA00DF0699 /* Build configuration list for PBXNativeTarget "HackerBooksUITests" */ = {
 			isa = XCConfigurationList;
@@ -583,6 +585,7 @@
 				0AAEB51E1D1CA5DA00DF0699 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

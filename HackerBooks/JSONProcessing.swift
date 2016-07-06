@@ -122,7 +122,7 @@ func loadFromLocalFile(fileName name: String, bundle: NSBundle = NSBundle.mainBu
 
 func loadFromURL() throws -> JSONArray{
     
-    if let url = NSURL(string: "https://t.co/K9ziV0z3SJ"),
+    if let url = NSURL(string: SOURCE_LIBRARY_URL),
         data = NSData(contentsOfURL: url),
         maybeArray = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? JSONArray,
         array = maybeArray{
@@ -139,7 +139,7 @@ func loadFromURL() throws -> JSONArray{
 
 func downloadFromURL() throws -> NSData{
     
-    let data = NSData(contentsOfURL: NSURL(string: "https://t.co/K9ziV0z3SJ")!)
+    let data = NSData(contentsOfURL: NSURL(string: SOURCE_LIBRARY_URL)!)
     
     guard let json = data else{
         throw HackerBooksError.resourcePointedByURLNotReachable

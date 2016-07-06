@@ -58,44 +58,9 @@ class Library {
     init(){
 
         do{
-            let jsonArray = try loadFromURL()
-//            print(json)
-            
-//            var bookArray = BookArray()
+            let jsonArray = try loadFromLocalFile(fileName: JSON_LIBRARY_FILE)
             
             try initLibrary(withJSONArray: jsonArray)
-            
-//            for eachDict in json{
-//                do{
-//                    let eachBook = try decode(book: eachDict)
-//
-//                    for eachTag in eachBook.tags{
-//                        var booksWithTag = BookSet()
-//                        if let hasTags = self.dict[eachTag]{
-//                            booksWithTag = hasTags
-//                        }
-//                        booksWithTag.insert(eachBook)
-//                        self.dict[eachTag] = booksWithTag
-//                    }
-//                    
-//                }catch{
-//                    print("Error al procesar \(eachDict)")
-//                }
-//            }
-            
-//            print(bookArray.description)
-//            loadDictionary(withBookArray: bookArray)
-            
-//            print(self.dict.count)
-//            print(bookCountForTag("java"))
-//            print(bookCountForTag("javascript"))
-//            print(bookCountForTag("programming"))
-//            print(self.dict)
-
-//            for (key, value) in self.dict {
-//                print("Dictionary key \(key) -  Dictionary value \(value)")
-//            }
-
             
         }catch{
             print("Error en la carga de JSON")
@@ -120,11 +85,11 @@ class Library {
     // una temática.
     // Un libro puede estar en una o más temáticas. Si no hay
     // libros para una temática, ha de devolver nil
-    func booksForTag (tag: Tag?) -> BookSet?{
-        guard !(bookCountForTag(tag!) == 0) else{
+    func booksForTag (tag: Tag) -> BookSet?{
+        guard !(bookCountForTag(tag) == 0) else{
             return nil
         }
-        return self.dict[tag!]
+        return self.dict[tag]
 
     }
         
@@ -135,11 +100,17 @@ class Library {
     // devuelve nil
     // Devolverá, si todo va bien, el libro nº index de la etiqueta tag
     func bookAtIndex(index: Int,
-                     forTag tag: Tag?) -> Book?{
+                     forTag tag: Tag) -> Book?{
         
-        let books = self.booksForTag(tag)
-        return books![(books?.startIndex.advancedBy(index))!]
-
+        guard let _:Int = index else{
+            return nil
+        }
+        
+        guard let books = self.booksForTag(tag) else{
+            return nil
+        }
+        
+        return books[(books.startIndex.advancedBy(index))]
     }
     
     // Tag name: return tag's name
@@ -183,6 +154,10 @@ class Library {
             do{
                 let eachBook = try decode(book: eachDict)
                 
+                if eachBook.isFavorite {
+                    eachBook.isFavorite = true
+                }
+                
                 self.booksArray.append(eachBook)
     
                 for eachTag in eachBook.tags{
@@ -200,7 +175,6 @@ class Library {
         }
     
         print(self.dict.count)
-//        print(self.dict)
         print ("-------------")
         for (key, value) in self.dict {
         print("Dictionary key \(key) -  Dictionary value \(value)")
@@ -208,7 +182,7 @@ class Library {
         print ("-------------")
         print(self.books.description)
         print ("-------------")
-        print(self.tags.description)
+        print(self.tags)
     }
     
 }

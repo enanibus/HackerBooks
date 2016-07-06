@@ -61,14 +61,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //let model = StarWarsUniverse(characters: chars)
             let model = Library()
             // Crear un VC
-            let libVC = LibraryTableViewController(model: model)
+        let libro = model.books[0]
+//        let bVC = BookViewController(model: libro)
+            let lVC = LibraryTableViewController(model: model)
         
             // Lo metemos en un Nav
-            let libNav = UINavigationController(rootViewController: libVC)
+            let nav = UINavigationController(rootViewController: lVC)
         
-            //creamos character VC
-//            let charVC = CharacterViewController(model: model.character(atIndex: 0, forAffiliation: .galacticEmpire))
-            
+            //creamos book VC
+//            let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[1])!)
+        
             //meterlo en otro navVC
 //            let charNav = UINavigationController(rootViewController: charVC)
             
@@ -78,11 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            
             //poner el split como VC
             
-            window?.rootViewController = libNav
+            window?.rootViewController = nav
         
             // Asignar delegados
-//            uVC.delegate = charVC
-            
+//            libVC.delegate = bookVC
+        
             window?.makeKeyAndVisible()
 
             return true

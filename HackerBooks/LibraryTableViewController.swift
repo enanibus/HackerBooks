@@ -15,7 +15,7 @@ class LibraryTableViewController: UITableViewController {
     
     //MARK: - Properties
     let model : Library
-//    var delegate : LibraryTableViewControllerDelegate
+    var delegate : LibraryTableViewControllerDelegate?
     
     //MARK: - Initialization
     init(model: Library){
@@ -30,17 +30,31 @@ class LibraryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "HackerBooks"
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Table view delegate
+    override func tableView(tableView: UITableView,
+                            didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // Averiguar cual es el libro
+        let item = book(forIndexPath: indexPath)
+        
+        // Crear un BookVC
+        let bookVC = BookViewController(model: item)
+        
+        // Hacerle un push
+        navigationController?.pushViewController(bookVC, animated: true)
+        
+        // Enviamos la misma info via notificaciones
+//        let nc = NSNotificationCenter.defaultCenter()
+//        let notif = NSNotification(name: DidChangeNotification, object: self, userInfo: [BookKey:theBook])
+//        nc.postNotification(notif)
+        
     }
 
     // MARK: - Table view data source
@@ -52,7 +66,6 @@ class LibraryTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.bookCountForTag(model.tags[section])
     }
-
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
@@ -66,7 +79,7 @@ class LibraryTableViewController: UITableViewController {
         var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
         
         if cell == nil{
-            // El optional está vacío: hay que crearla a pelo
+            // El optional está vacío: hay que crear la celda a pelo
             cell = UITableViewCell(style: .Subtitle,
                                    reuseIdentifier: cellId)
         }
@@ -83,53 +96,7 @@ class LibraryTableViewController: UITableViewController {
         
         return model.tags[section].name.capitalizedString
     }
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+        
     func book(forIndexPath indexPath: NSIndexPath)->Book{
         
         return model.bookAtIndex(indexPath.row, forTag: model.tags[indexPath.section])!
@@ -137,7 +104,7 @@ class LibraryTableViewController: UITableViewController {
 
 }
 
-//protocol LibraryTableViewControllerDelegate {
-//    
-//    func libraryTableViewController(vc : LibraryTableViewController, didSelectCharacter character: Book)
-//}
+protocol LibraryTableViewControllerDelegate {
+    
+    func libraryTableViewController(vc : LibraryTableViewController, didSelectBook book: Book)
+}
