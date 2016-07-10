@@ -30,7 +30,6 @@ class LibraryTableViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "HackerBooks"
         self.edgesForExtendedLayout = .None
-        self.suscribeNotificationsFavoritesDidChange()
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,7 +48,15 @@ class LibraryTableViewController: UITableViewController {
         delegate?.libraryTableViewController(self, didSelectBook: item)
         
         // Enviamos la misma info via notificaciones
-        notifySelectedBookDidChange(item)
+        self.notifySelectedBookDidChange(item)
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Alta en notificación de cambios en tag favorito
+        self.suscribeNotificationsFavoritesDidChange()
         
     }
     

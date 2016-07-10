@@ -16,6 +16,7 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var pdfViewer: UIWebView!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
+    
     init(model: Book){
         self.model = model
         super.init(nibName: nil, bundle: nil)

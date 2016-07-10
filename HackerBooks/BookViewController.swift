@@ -80,7 +80,7 @@ class BookViewController: UIViewController {
          syncModelWithView()
         
         // Notifica al modelo del cambio
-        notifySuscriptorsBookTagDidChange(model)
+        self.notifySuscriptorsBookTagDidChange(model)
         
     }
     
@@ -105,15 +105,13 @@ class BookViewController: UIViewController {
         // el navigation
 //        self.edgesForExtendedLayout = .None
 
-        
         // Justo antes de mostrarse (después de viewDidLoad)
         // Posiblemente más de una vez
         
         // Alta en notificación de cambios en el modelo
-        subscribeNotificationsBookDidChange()
-//        let nc = NSNotificationCenter.defaultCenter()
-//        nc.addObserver(self, selector: #selector(syncModelWithView), name: BOOK_DID_CHANGE_NOTIFICATION, object: self.model)
+        self.subscribeNotificationsBookDidChange()
         
+        // Sincronizar vista y modelo
         syncModelWithView()
         
     }
