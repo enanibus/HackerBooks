@@ -23,68 +23,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Mirar si es la primera vez que se arranca la aplicación
         // Esto se hace con User defaults
         
-        
-        // crear una instancia de modelo
-        // let data = NSData(contentsOfURL: NSURL(string: "https://t.co/K9ziV0z3SJ")!)
-        
-        
 //        do{
 //            let json = try loadFromURL()
 //            print(json)
-//            
-//            var books = [Book]()
-//            for dict in json{
-//                do{
-//                    let book = try decode(book: dict)
-//                    books.append(book)
-//                }catch{
-//                    print("Error al procesar \(dict)")
-//                }
-//                
-//            }
 //
-//            print(books.description)
-//
-//            var dicc = [Tag : [Book]]()
-//            for eachBook in books{
-//                for eachTag in eachBook.tags{
-//                    dicc[eachTag]?.append(eachBook)
-//                }
-//            }
         
-//            
-//        for (key, value) in dicc {
-//            print("Dictionary key \(key) -  Dictionary value \(value)")
-//        }
-        
-            // Podemos crear el modelo
-            //let model = StarWarsUniverse(characters: chars)
+            // Crear el modelo
             let model = Library()
-            // Crear un VC
-        let libro = model.books[0]
-//        let bVC = BookViewController(model: libro)
-            let lVC = LibraryTableViewController(model: model)
         
-            // Lo metemos en un Nav
-            let nav = UINavigationController(rootViewController: lVC)
+            // Crear un Library VC
+            let libVC = LibraryTableViewController(model: model)
         
-            //creamos book VC
-//            let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[1])!)
+            // Se mete Library VC en un Library Nav
+            let libNav = UINavigationController(rootViewController: libVC)
         
-            //meterlo en otro navVC
-//            let charNav = UINavigationController(rootViewController: charVC)
-            
-            //crear el split view
-//            let splitVC = UISplitViewController()
-//            splitVC.viewControllers = [uNav, charNav]
-//            
+            // Crear un Book VC
+            let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[0])!)
+        
+            // Se mete BookVC en un Book Nav
+            let bookNav = UINavigationController(rootViewController: bookVC)
+        
+            // Crear el Split View Controller
+            let splitVC = UISplitViewController()
+            splitVC.viewControllers = [libNav, bookNav]
+
             //poner el split como VC
-            
-            window?.rootViewController = nav
+            window?.rootViewController = splitVC
         
             // Asignar delegados
-//            libVC.delegate = bookVC
+            libVC.delegate = bookVC
         
+            //Mostrar la window
             window?.makeKeyAndVisible()
 
             return true

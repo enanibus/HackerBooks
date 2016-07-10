@@ -9,19 +9,37 @@ Práctica Fundamentos de Programacion iOS con Swift - KeepCoding Startup Enginee
 
 #### - ¿En qué otros modos podemos trabajar? ¿is, as?
 
-*Podemos trabajar con el operador de cast **as?**. En esta práctica lo he utilizado como en el ejemplo de clase, con una función `decode` sobrecargada, una para operar sobre las ocurrencias de JSONDictionary para parsear Book y otro para el caso un JSONDictionary? Optional, que lanza un error en el caso de no recibirlo. En otro caso se utiliza en  la función de decodificación para ver si se ha recibido un JSONArray con un opcional maybeArray*
+*Podemos trabajar con el operador de cast 'as'. En esta práctica lo he utilizado como en el ejemplo de clase, con una función `decode` sobrecargada, una para operar sobre las ocurrencias de JSONDictionary para parsear la clase Book y otro para el caso un JSONDictionary? Optional, que lanza un error en el caso de no recibirlo. En otro caso se utiliza en  la función de decodificación para ver si se ha recibido un JSONArray con un opcional maybeArray*
 
-#### - ¿Dónde guardarías las imágenes de portada y los pdfs?
+#### - ¿Dónde guardarías las imágenes de portada y los pdfs? 
+*`En la carpeta Cache de la Sandbox de la aplicación`*
 
-#### - ¿Cómo harías para persistir la propiedad `isFavorite` de un libro?
+#### - ¿Cómo harías para persistir la propiedad `isFavorite` de un libro? ¿Se te ocurre más de una forma de hacerlo?
+
+*Para persistir la datos de favoritos se puede utilizar un `fichero que se guarda en la carpeta Documentos de la Sandbox de la aplicación para guardar los favoritos`. Si se cierra la aplicación los datos de favoritos estarán guardados en disco y al abrirla de nuevo se restaura la situación anterior.
+Otra forma de hacerlo es guardarlo como un `diccionario de pares <clave, valor> en NSUserDefaults`, donde cada entrada sea un libro etiquetado como favorito con valor = true. De la misma forma que antes, se guardan/restauran los favoritos. También se puede hacer con frameworks de persistencia, siendo uno de ellos `Core Data`*
 
 #### - ¿Cómo harías para notificar que la propiedad `isFavorite` de un libro ha cambiado?
+Se pueden utilizar varios métodos, entre otros:
 
-#### - ¿Cómo enviarías información desde el controlador de un AGTBook a un AGTLibraryTableVIewController? ¿Cuál te parece mejor?
+**1.- **Target -> Action
+
+**2.- **Delegado
+
+**3.- **Notificaciones
+
+En el caso de la práctica, LibraryTableViewController es Delegado de BookViewController, y cuando la información de un libro ha cambiado, se hace por las dos vías, vía delegado y Delegado y vía Notificaciones.
+
+
+#### - ¿Cómo enviarías información desde el controlador de un AGTBook a un AGTLibraryTableViewController? ¿Cuál te parece mejor?
+Pues como ya hemos dicho en la pregunta anterior, ésas son las posibilidades. La decisión queda a manos del criterio que adopte diseñador de la aplicación, en este caso, he decidido hacerlo con el método de Delegado
+Creo que el método de `Notificaciones` es el mejor permite avisar a todos los objetos que se suscriban a la misma
 
 #### - Explica el método `reloadData` de *UITableView* ¿Es una aberración desde el punto de vista de rendimiento (volver a cargar datos que en su mayoría ya estaban correctos)?. Explica por qué no es así. ¿Hay una forma alternativa? ¿Cuándo merece la pena usarlo?
+Además de que el data source modelo que alimenta la UITableVIew está en local y no hay que descargarlo, tengo entendido que las clase de Cocoa solamente actualizan las celdas que 'caben' en una vista; por ambos motivos no parece desde luego ninguna aberración
 
-#### - ¿Cómo harías para notificar que un usuario ha cambiado en la tabla el libro seleccionado al *AGTSimplePDFVIewController* para su actualización. 
+#### - ¿Cómo harías para notificar que un usuario ha cambiado en la tabla el libro seleccionado al *AGTSimplePDFVIewController* para su actualización.
+En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe a las notificaciones con el selector de que un libro haya cambiado y así se actualiza por tanto la vista del pdf
 
 #### - Extras
 ##### - a ¿Qué funcionalidades le añadiaías antes de subirla a la App Store?

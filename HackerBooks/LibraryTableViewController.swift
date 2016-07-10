@@ -8,8 +8,7 @@
 
 import UIKit
 
-let DidChangeNotification = "Selected Book did change"
-let BookKey = "key"
+//let BookKey = "key"
 
 class LibraryTableViewController: UITableViewController {
     
@@ -30,6 +29,8 @@ class LibraryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "HackerBooks"
+        self.edgesForExtendedLayout = .None
+        self.suscribeNotificationsFavoritesDidChange()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,17 +45,20 @@ class LibraryTableViewController: UITableViewController {
         // Averiguar cual es el libro
         let item = book(forIndexPath: indexPath)
         
-        // Crear un BookVC
-        let bookVC = BookViewController(model: item)
-        
-        // Hacerle un push
-        navigationController?.pushViewController(bookVC, animated: true)
+        // Avisar al delegado
+        delegate?.libraryTableViewController(self, didSelectBook: item)
         
         // Enviamos la misma info via notificaciones
-//        let nc = NSNotificationCenter.defaultCenter()
-//        let notif = NSNotification(name: DidChangeNotification, object: self, userInfo: [BookKey:theBook])
-//        nc.postNotification(notif)
+        notifySelectedBookDidChange(item)
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Baja en las notificaciones
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self)
     }
 
     // MARK: - Table view data source
@@ -101,9 +105,33 @@ class LibraryTableViewController: UITableViewController {
         
         return model.bookAtIndex(indexPath.row, forTag: model.tags[indexPath.section])!
     }
-
+    
+    
+    //MARK: - Notificaciones
+    
+    func notifySelectedBookDidChange(withBookSelected: Book){
+        let nc = NSNotificationCenter.defaultCenter()
+        let notif = NSNotification(name: BOOK_DID_CHANGE_NOTIFICATION,
+                                   object: self,
+                                   userInfo: [BOOK_KEY:withBookSelected])
+        nc.postNotification(notif)
+    }
+    
+    func suscribeNotificationsFavoritesDidChange(){
+        // Alta en notificación
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: #selector(favoriteDidChange),
+                       name: FAVORITES_DID_CHANGE_NOTIFICATION,
+                       object: nil)
+    }
+    
+    func favoriteDidChange(notification: NSNotification){
+        self.tableView.reloadData()
+    }
+    
 }
 
+//MARK: - Delegate
 protocol LibraryTableViewControllerDelegate {
     
     func libraryTableViewController(vc : LibraryTableViewController, didSelectBook book: Book)

@@ -31,18 +31,48 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Alta en notificación
-//        let nc = NSNotificationCenter.defaultCenter()
-//        nc.addObserver(self, selector: #selector(characterDidChange), name: CharacterDidChangeNotification, object: nil)
-        
-        
-        syncModelWithView()
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
-    //MARK: Sync Model & View
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        activityView.hidden = true
+        syncModelWithView()
+        // Alta en notificación
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self,
+                       selector: #selector(bookDidChange),
+                       name: BOOK_DID_CHANGE_NOTIFICATION, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Baja en las notificaciones
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self)
+    }
+    
+    
+    //MARK: Utils
+    func bookDidChange(notification: NSNotification){
+        
+        // Sacar el userInfo
+        let info = notification.userInfo!
+        
+        // Sacar el libro
+        let book = info[BOOK_KEY] as? Book
+        
+        // Actualizar el modelo
+        model = book!
+        
+        // Sincronizar las vistas
+        syncModelWithView()
+        
+    }
+    
     func syncModelWithView(){
         pdfViewer.delegate = self
         activityView.startAnimating()
@@ -52,12 +82,7 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
                            baseURL: NSURL())
         
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
 
     //MARK: - UIWebViewDelegate
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -70,7 +95,8 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
         
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest,
+                 navigationType: UIWebViewNavigationType) -> Bool {
         
         if navigationType == .LinkClicked || navigationType == .FormSubmitted{
             return false

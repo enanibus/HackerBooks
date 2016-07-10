@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Library {
 
@@ -63,9 +64,17 @@ class Library {
             try initLibrary(withJSONArray: jsonArray)
             
         }catch{
-            print("Error en la carga de JSON")
+            print(HackerBooksError.jsonParsingError)
         }
         
+        subscribeNotificationsTagDidChange()
+        
+    }
+    
+    deinit {
+
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self)
     }
     
     
@@ -73,11 +82,14 @@ class Library {
     
     // Cantidad de libros que hay en una temática.
     // Si el tag no existe, debe devolver cero
-    func bookCountForTag (tag: Tag?) -> Int{
-        if let tagName = tag {
-            return self.dict[tagName]!.count
+    func bookCountForTag (tag: Tag) -> Int{
+        if !self.tags.contains(tag){
+            return 0
         }
-        return 0
+        guard let count = self.dict[tag]?.count else {
+            return 0
+        }
+        return count
     }
     
 
@@ -119,23 +131,31 @@ class Library {
     }
     
     
-    //MARK: - CRUD(C,D) + notificaciones de cambios en el modelo
+    //MARK: - CRUD(C,D) -> provocan notificaciones de cambios en el modelo
     
     //Añadir libro a la etiqueta
     func addBookForTag(book: Book, tag: Tag) {
-        
+        if self.dict[tag] == nil {
+            dict[tag] = BookSet()
+        }
         self.dict[tag]?.insert(book)
-        
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: LIBRARY_DID_CHANGE_NOTIFICATION, object: nil))
     }
-    
     
     // Elimina libro de la etiqueta
     func removeBookForTag(book: Book, tag: Tag) {
-        
-        self.dict[tag]?.removeAtIndex((dict[tag]?.indexOf(book))!)
-        
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: LIBRARY_DID_CHANGE_NOTIFICATION, object: nil))
+        if self.dict[tag] == nil{
+            return
+        }
+
+        self.dict[tag]?.remove(book)
+
+        // Si la etiqueta FAVORITES no tiene libros, elimina su entrada del diccionario
+        if (tag == Tag.favoriteBookTag()) && (bookCountForTag(tag) == 0) {
+            var cleanDict = makeEmptyDictionary()
+            cleanDict = deleteFavoriteTagFromSet(self.dict)
+            self.dict = cleanDict
+        }
+
     }
     
     
@@ -173,18 +193,69 @@ class Library {
                     throw HackerBooksError.jsonParsingError
             }
         }
-    
-        print(self.dict.count)
-        print ("-------------")
-        for (key, value) in self.dict {
-        print("Dictionary key \(key) -  Dictionary value \(value)")
-        }
-        print ("-------------")
-        print(self.books.description)
-        print ("-------------")
-        print(self.tags)
+        
     }
     
+    func isFavorite(book: Book?) -> Bool{
+        guard let fav = book else{
+            return false
+        }
+        return (fav.isFavorite)
+    }
+    
+    func deleteFavoriteTagFromSet(dict: BookDictionary) -> BookDictionary{
+        let arrayOfTuplesWithoutFavorites =
+            dict.filter { $0.0 != Tag(bookTagWithName: FAVORITES) }
+        
+        var dictWithoutTagFavorites = makeEmptyDictionary()
+        
+        for each in arrayOfTuplesWithoutFavorites{
+            dictWithoutTagFavorites[each.0] = each.1
+        }
+        
+        return dictWithoutTagFavorites
+    }
+    
+    //MARK: - Notificaciones
+    
+    // Se apunta a notificaciones de cambio de tag FAVORITES
+    func subscribeNotificationsTagDidChange(){
+        // Alta en notificación
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self,
+                        selector: #selector(notifyFavoriteDidChange),
+                        name: TAG_DID_CHANGE_NOTIFICATION,
+                        object: nil)
+    }
+    
+    // Notifica cambio de favoritos en el modelo
+    @objc func notifyFavoriteDidChange(notification: NSNotification){
+        
+        // Sacar el userInfo
+        let info = notification.userInfo!
+        
+        // Obtener el libro
+        let book = info[BOOK_KEY] as? Book
+        
+        // Se añade/quita de la entrada de favoritos del diccionario        
+        if isFavorite(book) {
+            addBookForTag(book!, tag: Tag(bookTagWithName: FAVORITES))
+        }
+        else{
+            removeBookForTag(book!, tag: Tag(bookTagWithName: FAVORITES))
+        }
+        
+        // Notifica a los suscriptores del cambio de favorito en el modelo
+        notifySuscriptorsFavoritesDidChange()
+        
+    }
+    
+    func notifySuscriptorsFavoritesDidChange(){
+        let nc = NSNotificationCenter.defaultCenter()
+        let notif = NSNotification(name: FAVORITES_DID_CHANGE_NOTIFICATION, object: self)
+        nc.postNotification(notif)
+    }
+
 }
 
 

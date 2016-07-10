@@ -17,6 +17,8 @@ class BookViewController: UIViewController {
     
     @IBOutlet weak var tagsView: UILabel!
     
+    @IBOutlet weak var favorites: UIBarButtonItem!
+    
     var model : Book
     
     //MARK: - Initialization
@@ -44,6 +46,13 @@ class BookViewController: UIViewController {
         
         // Tags
         tagsView.text = model.listOfTags().capitalizedString
+        
+        if (model.isFavorite) {
+            favorites.title = "🌟"
+        }else{
+            favorites.title = "⭐️"
+        }
+        
     }
 
     @IBAction func readPDF(sender: AnyObject) {
@@ -58,15 +67,30 @@ class BookViewController: UIViewController {
     
     @IBAction func markAsFavorite(sender: AnyObject) {
         
+        // Provoca notificacion de cambio favorito/no favorito
+        
+        if (self.model.isFavorite){
+            self.model.isFavorite = false
+        }
+        else {
+            self.model.isFavorite = true
+        }
+
+        // Refresca los datos
+         syncModelWithView()
+        
+        // Notifica al modelo del cambio
+        notifySuscriptorsBookTagDidChange(model)
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         // Antes de que la vista tenga sus dimensiones
         // Una sola vez
+        self.edgesForExtendedLayout = .None
         
     }
 
@@ -77,19 +101,28 @@ class BookViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        
         // Para que el VC se ajuste al espacio que deja
         // el navigation
-        // edgesForExtendedLayout = .None
+//        self.edgesForExtendedLayout = .None
+
         
-        // Justo antes de montrarse (después de viewDidLoad)
+        // Justo antes de mostrarse (después de viewDidLoad)
         // Posiblemente más de una vez
+        
+        // Alta en notificación de cambios en el modelo
+        subscribeNotificationsBookDidChange()
+//        let nc = NSNotificationCenter.defaultCenter()
+//        nc.addObserver(self, selector: #selector(syncModelWithView), name: BOOK_DID_CHANGE_NOTIFICATION, object: self.model)
+        
         syncModelWithView()
         
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        // Baja en las notificaciones
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -98,6 +131,20 @@ class BookViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
+    func subscribeNotificationsBookDidChange(){
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: #selector(syncModelWithView), name: BOOK_DID_CHANGE_NOTIFICATION, object: self.model)
+    }
+    
+    func notifySuscriptorsBookTagDidChange(withBookSelected: Book){
+        let nc = NSNotificationCenter.defaultCenter()
+        let notif = NSNotification(name: TAG_DID_CHANGE_NOTIFICATION,
+                                   object: self,
+                                   userInfo: [BOOK_KEY:withBookSelected])
+        nc.postNotification(notif)
+    }
+
 
 }
 

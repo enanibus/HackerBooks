@@ -37,10 +37,10 @@ class Book : Comparable, Hashable {
             return self.hasFavoriteTag()
         }
         set{
-            if newValue {
-                self.tags.insert(Tag(withName: FAVORITES), atIndex: 0)
-            }else{
+            if self.hasFavoriteTag() {                
                 self.tags.removeAtIndex(0)
+            }else{
+                self.tags.insert(Tag(withName: FAVORITES), atIndex: 0)
             }
         }
     }

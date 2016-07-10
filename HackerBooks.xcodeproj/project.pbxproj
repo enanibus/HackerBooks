@@ -96,6 +96,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A0F95BA1D32829F0007831E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0AAEB5551D24B79F00DF0699 /* Constants.swift */,
+				0AAEB5441D23639B00DF0699 /* Errors.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		0A0F95BB1D3283230007831E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0AAEB5461D24A38800DF0699 /* JSONProcessing.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		0AAEB4E51D1CA5DA00DF0699 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +136,8 @@
 		0AAEB4F01D1CA5DA00DF0699 /* HackerBooks */ = {
 			isa = PBXGroup;
 			children = (
+				0A0F95BB1D3283230007831E /* Utils */,
+				0A0F95BA1D32829F0007831E /* Settings */,
 				0AAEB5521D24B5D400DF0699 /* Views */,
 				0AAEB52A1D22F29900DF0699 /* Controllers */,
 				0AAEB52C1D22F2A800DF0699 /* Resources */,
@@ -168,9 +187,6 @@
 				0AAEB53E1D23631600DF0699 /* Book.swift */,
 				0AAEB5421D23632E00DF0699 /* Tag.swift */,
 				0AAEB5401D23632200DF0699 /* Library.swift */,
-				0AAEB5551D24B79F00DF0699 /* Constants.swift */,
-				0AAEB5461D24A38800DF0699 /* JSONProcessing.swift */,
-				0AAEB5441D23639B00DF0699 /* Errors.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
