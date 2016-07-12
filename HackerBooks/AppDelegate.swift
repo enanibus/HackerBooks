@@ -24,40 +24,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do{
             try downloadRemoteJSON()
-        
-            // Crear el modelo
-            let model = Library()
-        
-            // Crear un Library VC
-            let libVC = LibraryTableViewController(model: model)
-        
-            // Se mete Library VC en un Library Nav
-            let libNav = UINavigationController(rootViewController: libVC)
-        
-            // Crear un Book VC
-            let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[0])!)
-        
-            // Se mete BookVC en un Book Nav
-            let bookNav = UINavigationController(rootViewController: bookVC)
-        
-            // Crear el Split View Controller
-            let splitVC = UISplitViewController()
-            splitVC.viewControllers = [libNav, bookNav]
-
-            //poner el split como VC
-            window?.rootViewController = splitVC
-        
-            // Asignar delegados
-            libVC.delegate = bookVC
-        
-            //Mostrar la window
-            window?.makeKeyAndVisible()
-
-            return true
             
         }catch{
             fatalError("Error while loading JSON")
         }
+        
+        // Crear el modelo
+        let model = Library()
+        
+        // Crear un Library VC
+        let libVC = LibraryTableViewController(model: model)
+        
+        // Se mete Library VC en un Library Nav
+        let libNav = UINavigationController(rootViewController: libVC)
+        
+        // Crear un Book VC
+        let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[0])!)
+        
+        // Se mete BookVC en un Book Nav
+        let bookNav = UINavigationController(rootViewController: bookVC)
+        
+        // Crear el Split View Controller
+        let splitVC = UISplitViewController()
+        splitVC.viewControllers = [libNav, bookNav]
+
+        //poner el split como VC
+        window?.rootViewController = splitVC
+        
+        // Asignar delegados
+        libVC.delegate = bookVC
+        
+        //Mostrar la window
+        window?.makeKeyAndVisible()
+
+        return true
         
     }
 

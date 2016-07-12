@@ -16,8 +16,10 @@ Práctica Fundamentos de Programacion iOS con Swift - KeepCoding Startup Enginee
 
 #### - ¿Cómo harías para persistir la propiedad `isFavorite` de un libro? ¿Se te ocurre más de una forma de hacerlo?
 
-*Para persistir la datos de favoritos se puede utilizar un `fichero que se guarda en la carpeta Documentos de la Sandbox de la aplicación para guardar los favoritos`. Si se cierra la aplicación los datos de favoritos estarán guardados en disco y al abrirla de nuevo se restaura la situación anterior.
-Otra forma de hacerlo es guardarlo como un `diccionario de pares <clave, valor> en NSUserDefaults`, donde cada entrada sea un libro etiquetado como favorito con valor = true. De la misma forma que antes, se guardan/restauran los favoritos. También se puede hacer con frameworks de persistencia, siendo uno de ellos `Core Data`*
+*He optado por guardar un array en NSUserDefaults con el título de los libros que son favoritos. Una vez que arranca la aplicación y al inicializar el Set de libros, se mira si el libro está en el array y se marca como favorito.
+Otra forma de hacerlo es guardarlo como un `diccionario de pares <clave, valor> en NSUserDefaults`, como en el curso online de Fundamentos iOS, donde cada entrada sea un libro etiquetado como favorito con valor = true. De la misma forma que antes, se guardan/restauran los favoritos.
+Una forma alternativa de guardar los datos de favoritos es utilizar un `fichero que se guarda en la carpeta Documentos de la Sandbox de la aplicación para guardar los favoritos`. Si se cierra la aplicación los datos de favoritos estarán guardados en disco y al abrirla de nuevo se restaura la situación anterior.
+También se puede hacer con frameworks de persistencia, siendo uno de ellos `Core Data`*
 
 #### - ¿Cómo harías para notificar que la propiedad `isFavorite` de un libro ha cambiado?
 Se pueden utilizar varios métodos, entre otros:

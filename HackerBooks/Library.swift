@@ -63,12 +63,11 @@ class Library {
             
             try initLibrary(withJSONArray: jsonArray)
             
-            subscribeNotificationsTagDidChange()
-            
         }catch{
             print(HackerBooksError.jsonParsingError)
         }
         
+        subscribeNotificationsTagDidChange()
     }
     
     deinit {
@@ -168,15 +167,20 @@ class Library {
     
     func initLibrary (withJSONArray jsonArray: JSONArray) throws{
         
+        let fav = getFavoritesFromNSDefault()
         self.booksArray = BookArray()
         
         for eachDict in jsonArray{
             do{
                 let eachBook = try decode(book: eachDict)
                 
-                if eachBook.isFavorite {
+                if fav.contains(eachBook.title) {
                     eachBook.isFavorite = true
                 }
+//                else{
+//                    eachBook.isFavorite = false
+//                }
+                
                 
                 self.booksArray.append(eachBook)
     
@@ -240,9 +244,11 @@ class Library {
         // Se añade/quita de la entrada de favoritos del diccionario        
         if isFavorite(book) {
             addBookForTag(book!, tag: Tag(bookTagWithName: FAVORITES))
+            addFavoriteToNSDefault(withBookTitle: book!.title)
         }
         else{
             removeBookForTag(book!, tag: Tag(bookTagWithName: FAVORITES))
+            deleteFavoriteToNSDefault(withBookTitle: book!.title)
         }
         
         // Notifica a los suscriptores del cambio de favorito en el modelo

@@ -18,14 +18,36 @@ enum Directories{
 
 func setDefaults(){
     let defaults = NSUserDefaults.standardUserDefaults()
-    let favorites = defaults.arrayForKey(FAVORITES)
+    let fav = defaults.arrayForKey(FAVORITES)
     
     defaults.setObject(JSON_DOWNLOADED, forKey: JSON_DOWNLOADED)
-    defaults.setObject(favorites, forKey: FAVORITES)
+    defaults.setObject(fav, forKey: FAVORITES)
     defaults.synchronize()
 }
 
+func getFavoritesFromNSDefault() -> [String]{
+    let defaults = NSUserDefaults.standardUserDefaults()
+    guard let fav = defaults.arrayForKey(FAVORITES) as? [String] else{
+        return []
+    }
+    return fav
+}
 
+func addFavoriteToNSDefault(withBookTitle title: String){
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var fav = getFavoritesFromNSDefault()
+        fav.append(title)
+        defaults.setObject(fav, forKey: FAVORITES)
+        defaults.synchronize()
+}
+
+func deleteFavoriteToNSDefault(withBookTitle title: String){
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var fav = getFavoritesFromNSDefault()
+        fav.removeAtIndex((fav.indexOf(title))!)
+        defaults.setObject(fav, forKey: FAVORITES)
+        defaults.synchronize()
+}
 
 //MARK: - URL resources loading management
 

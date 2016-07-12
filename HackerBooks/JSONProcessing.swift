@@ -168,7 +168,7 @@ func isJSONDownloaded() -> Bool{
     return false
 }
 
-func setJSONDownloaded(){
+func setIsJSONDownloaded(){
     let defaults = NSUserDefaults.standardUserDefaults()
     defaults.setObject(JSON_DOWNLOADED, forKey: JSON_DOWNLOADED)
     defaults.synchronize()
