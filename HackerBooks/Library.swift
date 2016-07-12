@@ -59,15 +59,15 @@ class Library {
     init(){
 
         do{
-            let jsonArray = try loadFromLocalFile(fileName: JSON_LIBRARY_FILE)
+            let jsonArray = try loadFromDocuments()
             
             try initLibrary(withJSONArray: jsonArray)
+            
+            subscribeNotificationsTagDidChange()
             
         }catch{
             print(HackerBooksError.jsonParsingError)
         }
-        
-        subscribeNotificationsTagDidChange()
         
     }
     

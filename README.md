@@ -22,17 +22,17 @@ Otra forma de hacerlo es guardarlo como un `diccionario de pares <clave, valor> 
 #### - ¿Cómo harías para notificar que la propiedad `isFavorite` de un libro ha cambiado?
 Se pueden utilizar varios métodos, entre otros:
 
-**1.- **Target -> Action
+1.- Target -> Action
 
-**2.- **Delegado
+2.- Delegado
 
-**3.- **Notificaciones
+3.- Notificaciones
 
-En el caso de la práctica, LibraryTableViewController es Delegado de BookViewController, y cuando la información de un libro ha cambiado, se hace por las dos vías, vía delegado y Delegado y vía Notificaciones.
+En el caso de la práctica, LibraryTableViewController es Delegado de BookViewController, y cuando la información de un libro ha cambiado, se hace por las dos vías, vía Delegado y vía Notificaciones.
 
 
 #### - ¿Cómo enviarías información desde el controlador de un AGTBook a un AGTLibraryTableViewController? ¿Cuál te parece mejor?
-Pues como ya hemos dicho en la pregunta anterior, ésas son las posibilidades. La decisión queda a manos del criterio que adopte diseñador de la aplicación, en este caso, he decidido hacerlo con el método de notificaciones
+Pues como ya se ha comentado en la pregunta anterior, ésas son las posibilidades. La decisión queda a manos del criterio que adopte diseñador de la aplicación, en este caso, he decidido hacerlo con el método de notificaciones
 
 Creo que el método de `Notificaciones` es el mejor ya que permite avisar a todos los objetos que se suscriban a la misma. El patrón de diseño de Delegado está más limitado
 
@@ -48,9 +48,9 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 
 - En la parte de implementación del diccionario de libros con la estructura de datos MultiMap he visto que existen librerías como Buckets que permiten incluirla con CocoaPods pero he preferido hacerlo por mí mismo para aprender y por hacerlo con Swift, eso sí, me ha costado un poco por el tema de los opcionales y el casting Array <-> Set. No está implementado, cuando tenga tiempo, implementar el BookDictionary como una clase MultiMap<K, V>
 
-- 
+- También he leído que la mejor manera de suscribir/da de baja de notificaciones se hace en los métodos `init o viewDidLoad` para el alta y `deinit` para la baja. En la práctica y en clase lo hemos hecho en viewDidAppear/viewDidDisappear. Quisiera saber cuál es la mejor (creo que al instanciar/ desinstanciar sería mejor) 
 
-- En líneas generales,estoy contento del trabajo realizado, he aprendido muchísimo con esta práctica, aunque para llegar a ser Jedi queda el largo y tortuoso camino de la Fuerza
+- En líneas generales,estoy contento del trabajo realizado, he aprendido muchísimo con esta práctica, y aunque creo que Joven Padawan llego a ser, queda el largo y tortuoso camino de la Fuerza para alcanzar la meta de llegar a ser maestro Jedi
 
 
 #### - Extras

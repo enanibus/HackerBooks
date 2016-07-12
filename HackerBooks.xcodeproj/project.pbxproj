@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A0F95BD1D32A8910007831E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F95BC1D32A8910007831E /* DataManager.swift */; };
+		0A0F95BD1D32A8910007831E /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F95BC1D32A8910007831E /* FileManager.swift */; };
+		0A0F95BF1D32C6E80007831E /* PlaceholderBook.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F95BE1D32C6E80007831E /* PlaceholderBook.png */; };
 		0AAEB4F21D1CA5DA00DF0699 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEB4F11D1CA5DA00DF0699 /* AppDelegate.swift */; };
 		0AAEB4F91D1CA5DA00DF0699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEB4F81D1CA5DA00DF0699 /* Assets.xcassets */; };
 		0AAEB4FC1D1CA5DA00DF0699 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEB4FA1D1CA5DA00DF0699 /* LaunchScreen.storyboard */; };
@@ -46,7 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A0F95BC1D32A8910007831E /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		0A0F95BC1D32A8910007831E /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		0A0F95BE1D32C6E80007831E /* PlaceholderBook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceholderBook.png; sourceTree = "<group>"; };
 		0AAEB4EE1D1CA5DA00DF0699 /* HackerBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackerBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AAEB4F11D1CA5DA00DF0699 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AAEB4F81D1CA5DA00DF0699 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,7 +105,6 @@
 			children = (
 				0AAEB5551D24B79F00DF0699 /* Config.swift */,
 				0AAEB5441D23639B00DF0699 /* Errors.swift */,
-				0A0F95BC1D32A8910007831E /* DataManager.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -111,6 +112,7 @@
 		0A0F95BB1D3283230007831E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0A0F95BC1D32A8910007831E /* FileManager.swift */,
 				0AAEB5461D24A38800DF0699 /* JSONProcessing.swift */,
 			);
 			name = Utils;
@@ -197,6 +199,7 @@
 		0AAEB52C1D22F2A800DF0699 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0A0F95BE1D32C6E80007831E /* PlaceholderBook.png */,
 				0AAEB5381D23591000DF0699 /* books_readable.json */,
 			);
 			name = Resources;
@@ -324,6 +327,7 @@
 			files = (
 				0AAEB4FC1D1CA5DA00DF0699 /* LaunchScreen.storyboard in Resources */,
 				0AAEB54B1D24B42700DF0699 /* BookViewController.xib in Resources */,
+				0A0F95BF1D32C6E80007831E /* PlaceholderBook.png in Resources */,
 				0AAEB4F91D1CA5DA00DF0699 /* Assets.xcassets in Resources */,
 				0AAEB5391D23591000DF0699 /* books_readable.json in Resources */,
 				0AAEB54F1D24B46B00DF0699 /* SimplePDFViewController.xib in Resources */,
@@ -352,7 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AAEB5471D24A38800DF0699 /* JSONProcessing.swift in Sources */,
-				0A0F95BD1D32A8910007831E /* DataManager.swift in Sources */,
+				0A0F95BD1D32A8910007831E /* FileManager.swift in Sources */,
 				0AAEB5431D23632E00DF0699 /* Tag.swift in Sources */,
 				0AAEB5451D23639B00DF0699 /* Errors.swift in Sources */,
 				0AAEB54E1D24B46B00DF0699 /* SimplePDFViewController.swift in Sources */,

@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -23,10 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Mirar si es la primera vez que se arranca la aplicación
         // Esto se hace con User defaults
         
-//        do{
-//            let json = try loadFromURL()
-//            print(json)
-//
+        do{
+            try downloadRemoteJSON()
         
             // Crear el modelo
             let model = Library()
@@ -58,9 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             return true
             
-//        }catch{
-//            fatalError("Error while loading JSON")
-//        }
+        }catch{
+            fatalError("Error while loading JSON")
+        }
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

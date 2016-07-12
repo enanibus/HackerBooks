@@ -106,7 +106,7 @@ func tagsStringToArray(string: String)->[Tag]{
 }
 
 
-//MARK: - Loading
+//MARK: - JSON Loading
 func loadFromLocalFile(fileName name: String, bundle: NSBundle = NSBundle.mainBundle()) throws -> JSONArray{
     
     if let url = bundle.URLForResource(name),
@@ -123,31 +123,101 @@ func loadFromLocalFile(fileName name: String, bundle: NSBundle = NSBundle.mainBu
 
 func loadFromURL() throws -> JSONArray{
     
-    if let url = NSURL(string: SOURCE_LIBRARY_URL),
+    if let url = NSURL(string: REMOTE_LIBRARY_URL),
         data = NSData(contentsOfURL: url),
         maybeArray = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? JSONArray,
         array = maybeArray{
-        
         return array
-        
     }else{
         throw HackerBooksError.jsonParsingError
     }
 }
 
+func loadFromDocuments() throws -> JSONArray{
+    do{
+        let data = try getJSONFromDocuments()
+        if let maybeArray = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? JSONArray,
+            array = maybeArray{
+            return array
+        } else{
+            throw HackerBooksError.jsonParsingError
+        }
+    }
+    catch{
+        throw HackerBooksError.jsonParsingError
+    }
+}
 
-//MARK: - Downloading
+
+//MARK: - JSON Downloading
 
 func downloadFromURL() throws -> NSData{
-    
-    let data = NSData(contentsOfURL: NSURL(string: SOURCE_LIBRARY_URL)!)
-    
+    let data = NSData(contentsOfURL: NSURL(string: REMOTE_LIBRARY_URL)!)
     guard let json = data else{
         throw HackerBooksError.resourcePointedByURLNotReachable
     }
-    
     return json
 }
+
+func isJSONDownloaded() -> Bool{
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let isDownloaded = defaults.objectForKey(JSON_DOWNLOADED) as? String
+    if isDownloaded == JSON_DOWNLOADED{
+        return true
+    }
+    return false
+}
+
+func setJSONDownloaded(){
+    let defaults = NSUserDefaults.standardUserDefaults()
+    defaults.setObject(JSON_DOWNLOADED, forKey: JSON_DOWNLOADED)
+    defaults.synchronize()
+}
+
+func downloadRemoteJSON() throws  {
+    if !isJSONDownloaded(){
+        do{
+            let data = try downloadFromURL()
+            setDefaults()
+            try saveJSONToDocuments(withData: data)
+        }catch{
+            throw HackerBooksError.jsonDownloadingError
+        }
+    }
+}
+
+func saveJSONToDocuments(withData data: NSData) throws {
+    var url: NSURL
+    var newUrl: NSURL
+    do{
+        try url = getUrlLocal(fromPath: .Documents)
+        newUrl = url.URLByAppendingPathComponent(JSON_LIBRARY_FILE)
+    }catch{
+        throw HackerBooksError.urlNotFoundError
+    }
+    
+    guard data.writeToURL(newUrl, atomically: true) else{
+        throw HackerBooksError.jsonSavingFileError
+    }
+    
+}
+
+func getJSONFromDocuments() throws -> NSData{
+    var url : NSURL
+    var newUrl : NSURL
+    do{
+        try url = getUrlLocal(fromPath: .Documents)
+        newUrl = url.URLByAppendingPathComponent(JSON_LIBRARY_FILE)
+    }catch{
+        throw HackerBooksError.jsonSavingFileError
+    }
+    let datos = NSData(contentsOfURL: newUrl)
+    guard let data = datos else{
+        throw HackerBooksError.jsonSavingFileError
+    }
+    return data
+}
+
 
 
 
