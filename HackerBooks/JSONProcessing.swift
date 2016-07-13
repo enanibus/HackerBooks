@@ -190,7 +190,7 @@ func saveJSONToDocuments(withData data: NSData) throws {
     var url: NSURL
     var newUrl: NSURL
     do{
-        try url = getUrlLocal(fromPath: .Documents)
+        try url = getLocalURL(fromPath: .Documents)
         newUrl = url.URLByAppendingPathComponent(JSON_LIBRARY_FILE)
     }catch{
         throw HackerBooksError.urlNotFoundError
@@ -206,7 +206,7 @@ func getJSONFromDocuments() throws -> NSData{
     var url : NSURL
     var newUrl : NSURL
     do{
-        try url = getUrlLocal(fromPath: .Documents)
+        try url = getLocalURL(fromPath: .Documents)
         newUrl = url.URLByAppendingPathComponent(JSON_LIBRARY_FILE)
     }catch{
         throw HackerBooksError.jsonSavingFileError

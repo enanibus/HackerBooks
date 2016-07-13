@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A0F95BD1D32A8910007831E /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F95BC1D32A8910007831E /* FileManager.swift */; };
 		0A0F95BF1D32C6E80007831E /* PlaceholderBook.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F95BE1D32C6E80007831E /* PlaceholderBook.png */; };
+		0A23772C1D35796300505B9F /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23772B1D35796300505B9F /* AsyncImage.swift */; };
 		0AAEB4F21D1CA5DA00DF0699 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEB4F11D1CA5DA00DF0699 /* AppDelegate.swift */; };
 		0AAEB4F91D1CA5DA00DF0699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEB4F81D1CA5DA00DF0699 /* Assets.xcassets */; };
 		0AAEB4FC1D1CA5DA00DF0699 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEB4FA1D1CA5DA00DF0699 /* LaunchScreen.storyboard */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		0A0F95BC1D32A8910007831E /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		0A0F95BE1D32C6E80007831E /* PlaceholderBook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlaceholderBook.png; sourceTree = "<group>"; };
+		0A23772B1D35796300505B9F /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		0AAEB4EE1D1CA5DA00DF0699 /* HackerBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackerBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AAEB4F11D1CA5DA00DF0699 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AAEB4F81D1CA5DA00DF0699 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				0AAEB53E1D23631600DF0699 /* Book.swift */,
 				0AAEB5421D23632E00DF0699 /* Tag.swift */,
 				0AAEB5401D23632200DF0699 /* Library.swift */,
+				0A23772B1D35796300505B9F /* AsyncImage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				0AAEB5581D25AF9A00DF0699 /* Foundation.swift in Sources */,
 				0AAEB5511D24B49200DF0699 /* LibraryTableViewController.swift in Sources */,
 				0AAEB4F21D1CA5DA00DF0699 /* AppDelegate.swift in Sources */,
+				0A23772C1D35796300505B9F /* AsyncImage.swift in Sources */,
 				0AAEB5411D23632200DF0699 /* Library.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

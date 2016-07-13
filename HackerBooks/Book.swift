@@ -17,10 +17,11 @@ class Book : Comparable, Hashable {
     var tags        : [Tag]
     let imageURL    : NSURL
     let pdfURL      : NSURL
+    let cover       : AsyncImage
     
-    var photo : UIImage?{
+    var image : UIImage?{
         get{
-            return UIImage(data: NSData(contentsOfURL: self.imageURL)!)!
+            return self.cover.getImage()
         }
     }
     
@@ -29,7 +30,6 @@ class Book : Comparable, Hashable {
             return NSData(contentsOfURL: self.pdfURL)
         }
     }
-    
     
     //MARK: - Computed properties
     var isFavorite  : Bool{
@@ -62,6 +62,8 @@ class Book : Comparable, Hashable {
         self.tags = tags
         self.imageURL = imageURL
         self.pdfURL = pdfURL
+        self.cover = AsyncImage(withURL: self.imageURL,
+                                withImage: UIImage(imageLiteral: COVER_FILE))
     }
     
     

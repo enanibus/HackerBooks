@@ -36,7 +36,7 @@ class BookViewController: UIViewController {
     func syncModelWithView(){
         
         // Photo
-        photoView.image = model.photo
+        photoView.image = model.cover.getImage()
         
         // Title
         title = model.title
@@ -108,8 +108,10 @@ class BookViewController: UIViewController {
         // Justo antes de mostrarse (después de viewDidLoad)
         // Posiblemente más de una vez
         
-        // Alta en notificación de cambios en el modelo
+        // Alta en notificaciones de cambios en el modelo
         self.subscribeNotificationsBookDidChange()
+        
+        self.subscribeNotificationsImageDidChange()
         
         // Sincronizar vista y modelo
         syncModelWithView()
@@ -132,7 +134,10 @@ class BookViewController: UIViewController {
     
     func subscribeNotificationsBookDidChange(){
         let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: #selector(syncModelWithView), name: BOOK_DID_CHANGE_NOTIFICATION, object: self.model)
+        nc.addObserver(self,
+                       selector: #selector(syncModelWithView),
+                       name: BOOK_DID_CHANGE_NOTIFICATION,
+                       object: self.model)
     }
     
     func notifySuscriptorsBookTagDidChange(withBookSelected: Book){
@@ -141,6 +146,14 @@ class BookViewController: UIViewController {
                                    object: self,
                                    userInfo: [BOOK_KEY:withBookSelected])
         nc.postNotification(notif)
+    }
+    
+    func subscribeNotificationsImageDidChange(){
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self,
+                       selector: #selector(syncModelWithView),
+                       name: IMAGE_DID_CHANGE_NOTIFICATION,
+                       object: photoView.image)
     }
 
 

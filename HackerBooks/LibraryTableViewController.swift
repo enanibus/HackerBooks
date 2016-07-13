@@ -58,6 +58,8 @@ class LibraryTableViewController: UITableViewController {
         // Alta en notificación de cambios en tag favorito
         self.suscribeNotificationsFavoritesDidChange()
         
+        self.subscribeNotificationsImageDidChange()
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -96,7 +98,7 @@ class LibraryTableViewController: UITableViewController {
         }
         
         // Sincronizar book -> celda
-        cell?.imageView?.image = item.photo
+        cell?.imageView?.image = item.cover.getImage()
         cell?.textLabel?.text  = item.title
         cell?.detailTextLabel?.text = item.listOfAuthors()
 
@@ -133,6 +135,17 @@ class LibraryTableViewController: UITableViewController {
     }
     
     func favoriteDidChange(notification: NSNotification){
+        self.tableView.reloadData()
+    }
+    
+    func subscribeNotificationsImageDidChange(){
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: #selector(imageDidChange),
+                       name: IMAGE_DID_CHANGE_NOTIFICATION,
+                       object: nil)
+    }
+    
+    func imageDidChange(notification: NSNotification){
         self.tableView.reloadData()
     }
     

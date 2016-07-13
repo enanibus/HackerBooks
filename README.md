@@ -46,7 +46,7 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 
 #### - Comentarios
 
-- Sobre la pregunta acerca de cómo informar de cambios entre los controladores de AGTBookViewController y AGTLibraryTableViewController, en el código análogo de clase, el controlador de la tabla informa a su delegado, que es el controlador de AGTBook y además manda una notificación de que ha cambiado el foco del libreo seleccionado. Me gustaría conocer cuál es la mejor solución, si dejar ambas llamadas, quitar la notificación o condicionar a si su delegado está suscrito a notificaciones
+- Sobre la pregunta acerca de cómo informar de cambios entre los controladores de AGTBookViewController y AGTLibraryTableViewController, en el código análogo de clase, el controlador de la tabla informa a su delegado, que es el controlador de AGTBook y además manda una notificación de que ha cambiado el foco del libro seleccionado. Me gustaría conocer cuál es la mejor solución, si dejar ambas llamadas, quitar la notificación o condicionar a si su delegado está suscrito a notificaciones
 
 - En la parte de implementación del diccionario de libros con la estructura de datos MultiMap he visto que existen librerías como Buckets que permiten incluirla con CocoaPods pero he preferido hacerlo por mí mismo para aprender y por hacerlo con Swift, eso sí, me ha costado un poco por el tema de los opcionales y el casting Array <-> Set. No está implementado, cuando tenga tiempo, implementar el BookDictionary como una clase MultiMap<K, V>
 
@@ -56,7 +56,8 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 
 
 #### - Extras
-##### - a ¿Qué funcionalidades le añadiaías antes de subirla a la App Store?
+##### - a ¿Qué funcionalidades le añadirías antes de subirla a la App Store?
+*Se me ocurre la posibilidad de poder gestionar la librería, añadiendo y quitando libros. Además. podemos poner un UITabBarController en la UIView de la tabla para añadir funcionalidades*
 ##### - b Ponerle otro nombre con una plantilla
 ##### - c Usando la plantilla anteriormente descrita, ¿qué otras versiones se te ocurren?. ¿Alguna que se pueda monetizar?
 
