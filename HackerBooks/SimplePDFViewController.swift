@@ -77,11 +77,7 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
     func syncModelWithView(){
         pdfViewer.delegate = self
         activityView.startAnimating()
-        pdfViewer.loadData(model.pdf!,
-                           MIMEType: "application/pdf",
-                           textEncodingName: "UTF-8",
-                           baseURL: NSURL())
-        
+        renderContentOfPDF()
     }
 
 
@@ -96,6 +92,8 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
         
     }
     
+    
+    //MARK: - UIWebView & rendering of pdf 
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest,
                  navigationType: UIWebViewNavigationType) -> Bool {
         
@@ -104,6 +102,21 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
         }else{
             return true
         }
+    }
+    
+    func renderContentOfPDF(){
+        let  download = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
+        let bloque : dispatch_block_t = {
+            guard let pdf = self.model.pdf else{
+                self.pdfViewer.loadHTMLString("NO PDF AVAILABLE FOR BOOK!, SORRY FOR THE INCONVENIENCE", baseURL: NSURL())
+                return
+            }
+            self.pdfViewer.loadData(pdf,
+                                    MIMEType: "application/pdf",
+                                    textEncodingName: "UTF-8",
+                                    baseURL: NSURL())
+        }
+        dispatch_async(download, bloque)
     }
 
 

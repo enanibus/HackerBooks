@@ -17,8 +17,12 @@ class Book : Comparable, Hashable {
     var tags        : [Tag]
     let imageURL    : NSURL
     let pdfURL      : NSURL
-    let cover       : AsyncImage
     
+    //MARK: - Wrapper classes
+    let cover       : AsyncImage
+    let content     : AsyncPdf
+    
+    //MARK: - Computed properties
     var image : UIImage?{
         get{
             return self.cover.getImage()
@@ -27,7 +31,7 @@ class Book : Comparable, Hashable {
     
     var pdf : NSData?{
         get{
-            return NSData(contentsOfURL: self.pdfURL)
+            return self.content.getPDF()
         }
     }
     
@@ -64,6 +68,7 @@ class Book : Comparable, Hashable {
         self.pdfURL = pdfURL
         self.cover = AsyncImage(withURL: self.imageURL,
                                 withImage: UIImage(imageLiteral: COVER_FILE))
+        self.content = AsyncPdf(withURL: self.pdfURL)
     }
     
     

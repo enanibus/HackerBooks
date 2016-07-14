@@ -177,10 +177,6 @@ class Library {
                 if fav.contains(eachBook.title) {
                     eachBook.isFavorite = true
                 }
-//                else{
-//                    eachBook.isFavorite = false
-//                }
-                
                 
                 self.booksArray.append(eachBook)
     
@@ -265,5 +261,5 @@ class Library {
 }
 
 
-//MARK: - Extensiones
+//MARK: - Extensions
 

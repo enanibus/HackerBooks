@@ -68,23 +68,6 @@ func getLocalURL(fromPath path: Directories) throws -> NSURL{
     return localUrl
 }
 
-func loadResource(withUrl url: NSURL) throws -> NSData{
-    var data : NSData
-    do{
-        data = try loadResourceFromCache(withUrl: url)
-        return data
-    }catch{
-        do{
-            data = try loadResourceFromUrl(withUrl: url)
-            try saveResourceToCache(withUrl: url, andData: data)
-            return data
-        }
-        catch{
-            throw HackerBooksError.resourcePointedByURLNotReachable
-        }
-    }
-}
-
 func loadResourceFromCache(withUrl url: NSURL) throws -> NSData{
     do{
         let path = try getLocalURL(fromPath: .Cache)
@@ -121,6 +104,7 @@ func saveResourceToCache(withUrl url: NSURL, andData data: NSData) throws {
         throw HackerBooksError.resourcePointedByURLNotReachable
     }
 }
+
 
 
 //MARK: - Utils
