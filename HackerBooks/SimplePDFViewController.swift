@@ -39,8 +39,7 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        activityView.hidden = true
-        syncModelWithView()
+        pdfViewer.delegate = self
         // Alta en notificación
         let nc = NSNotificationCenter.defaultCenter()
         nc.addObserver(self,
@@ -54,6 +53,11 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
         // Baja en las notificaciones
         let nc = NSNotificationCenter.defaultCenter()
         nc.removeObserver(self)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        syncModelWithView()
     }
     
     
@@ -75,8 +79,9 @@ class SimplePDFViewController: UIViewController, UIWebViewDelegate {
     }
     
     func syncModelWithView(){
-        pdfViewer.delegate = self
+    
         activityView.startAnimating()
+        activityView.hidden = false
         renderContentOfPDF()
     }
 

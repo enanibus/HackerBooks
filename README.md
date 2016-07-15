@@ -61,7 +61,7 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 
 #### - Extras
 ##### - a ¿Qué funcionalidades le añadirías antes de subirla a la App Store?
-*Se me ocurre la posibilidad de poder gestionar la librería, añadiendo y quitando libros. Además. podemos poner un UITabBarController en la UIView de la tabla para añadir funcionalidades*
+*Se me ocurre la posibilidad de poder gestionar la librería, añadiendo y quitando libros. Además. podemos poner un UITabBarController en el Navigator que contiene la UIView de la tabla para añadir funcionalidades*
 ##### - b Ponerle otro nombre con una plantilla
 ##### - c Usando la plantilla anteriormente descrita, ¿qué otras versiones se te ocurren?. ¿Alguna que se pueda monetizar?
 
