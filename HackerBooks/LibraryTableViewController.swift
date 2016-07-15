@@ -8,8 +8,6 @@
 
 import UIKit
 
-//let BookKey = "key"
-
 class LibraryTableViewController: UITableViewController {
     
     //MARK: - Properties
@@ -29,7 +27,7 @@ class LibraryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "HackerBooks"
-        self.edgesForExtendedLayout = .None
+        self.edgesForExtendedLayout = .Bottom
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,7 +53,7 @@ class LibraryTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Alta en notificación de cambios en tag favorito
+        // Alta en notificacines de cambios en los modelos
         self.suscribeNotificationsFavoritesDidChange()
         
         self.subscribeNotificationsImageDidChange()

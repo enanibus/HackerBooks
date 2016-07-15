@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Crear el modelo
         let model = Library()
         
-        // Crear un Library VC
+        // Crear un Library VC de Favoritos
         let libVC = LibraryTableViewController(model: model)
         
         // Se mete Library VC en un Library Nav

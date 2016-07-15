@@ -108,7 +108,7 @@ class BookViewController: UIViewController {
         // Justo antes de mostrarse (después de viewDidLoad)
         // Posiblemente más de una vez
         
-        // Alta en notificaciones de cambios en el modelo
+        // Alta en notificaciones de cambios en los modelos
         self.subscribeNotificationsBookDidChange()
         
         self.subscribeNotificationsImageDidChange()
@@ -172,3 +172,5 @@ extension BookViewController: LibraryTableViewControllerDelegate{
         
     }
 }
+
+

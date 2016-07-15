@@ -50,9 +50,13 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 
 - En la parte de implementación del diccionario de libros con la estructura de datos MultiMap he visto que existen librerías como Buckets que permiten incluirla con CocoaPods pero he preferido hacerlo por mí mismo para aprender y por hacerlo con Swift, eso sí, me ha costado un poco por el tema de los opcionales y el casting Array <-> Set. No está implementado, cuando tenga tiempo, implementar el BookDictionary como una clase MultiMap<K, V>
 
-- También he leído que la mejor manera de suscribir/da de baja de notificaciones se hace en los métodos `init o viewDidLoad` para el alta y `deinit` para la baja. En la práctica y en clase lo hemos hecho en viewDidAppear/viewDidDisappear. Quisiera saber cuál es la mejor (creo que al instanciar/ desinstanciar sería mejor) 
+- Al estar acostumbrado a programar en lenguajes que manejan excepciones notarás que cualquier función que devuelva una tiene su try y su do{}. Supongo que es una buena práctica en Swift y que costará mucho cambiar desde Objective-C
 
-- En líneas generales,estoy contento del trabajo realizado, he aprendido muchísimo con esta práctica, y aunque creo que Joven Padawan llego a ser, queda el largo y tortuoso camino de la Fuerza para alcanzar la meta de llegar a ser maestro Jedi
+- En el init de AsyncImage no llamo a la función getImage() que hace la gestión de la descarga y renderizado de las imágenes. Se hace "a demanda", a medida que la aplicación cargue las vistas, como es requisito
+
+- También he leído que la mejor manera de suscribir/da de baja de notificaciones se hace en los métodos `init o viewDidLoad` para el alta y `deinit` para la baja. En la práctica y en clase lo hemos hecho en `viewDidAppear/viewDidDisappear`. Quisiera saber cuál es la mejor (creo que al instanciar/ desinstanciar sería mejor) 
+
+- En líneas generales, estoy muy contento del trabajo realizado, he aprendido muchísimo con esta práctica, y aunque creo que joven Padawan llego a ser, queda el largo y tortuoso camino de la Fuerza para alcanzar la meta de llegar a ser maestro Jedi
 
 
 #### - Extras

@@ -23,6 +23,7 @@ class AsyncImage{
         self.image = image
     }
     
+    //MARK: - Image management
     func getImage() -> UIImage?{
         
         // 1. Imagen por defecto UIImage(imageLiteral: COVER_FILE)

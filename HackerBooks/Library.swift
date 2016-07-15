@@ -124,6 +124,16 @@ class Library {
         return books[(books.startIndex.advancedBy(index))]
     }
     
+    func bookAtIndexBooksArray(index: Int) -> Book?{
+        
+        guard let _:Int = index else{
+            return nil
+        }
+        
+        return books[index]
+    }
+    
+    
     // Tag name: return tag's name
     func tagName(tag: Tag) -> String{
         return tag.name

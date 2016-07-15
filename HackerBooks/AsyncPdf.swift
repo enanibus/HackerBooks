@@ -22,6 +22,7 @@ class AsyncPdf{
         self.pdfData = nil
     }
     
+    //MARK: - PDF Data management
     func getPDF() -> NSData?{
         
         if self.pdfData == nil{

@@ -35,7 +35,6 @@ class Book : Comparable, Hashable {
         }
     }
     
-    //MARK: - Computed properties
     var isFavorite  : Bool{
         get{
             return self.hasFavoriteTag()
