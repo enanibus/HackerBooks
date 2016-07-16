@@ -56,12 +56,16 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 
 - También he leído que la mejor manera de suscribir/da de baja de notificaciones se hace en los métodos `init o viewDidLoad` para el alta y `deinit` para la baja. En la práctica y en clase lo hemos hecho en `viewDidAppear/viewDidDisappear`. Quisiera saber cuál es la mejor (creo que al instanciar/ desinstanciar sería mejor) 
 
+- Otra reflexión es que se intuye que a partir de un cierto número de horas trabajadas con Xcode y Swift, se verán los frutos ya que al final es siempre aplicar patrón Delegado/Notificaciones. Por ejemplo, la gestión de favoritos la he hecho como recomendaste, teniendo en cuenta que favorito es una tag más; a partir del cambio en el modelo, éste informa de su cambio a los suscriptores de su notifiación. Pues bien, a la hora de hacer la lista por título, no me daba cuenta de que es muy parecido. Creamos una variable en el modelo de Library para gestionar el sort y en función de su cambio, se actúa en consecuencia. Lo que quiero decir es que al principio no aplicamos certeramente siempre lo aprendido, es una tarea más dentro de todas las que hay que hacer
+
+
 - En líneas generales, estoy muy contento del trabajo realizado, he aprendido muchísimo con esta práctica, y aunque creo que joven Padawan llego a ser, queda el largo y tortuoso camino de la Fuerza para alcanzar la meta de llegar a ser maestro Jedi
 
 
 #### - App Universal
 
-- Hacer la versión iPhone del lector
+- Hacer la versión iPhone del lector: en principio esta tarea la he dejado para cuando suba suba la aplicación a la App store. En serio, iré subiendo a medida que lo vaya haciendo, ya que, como se ha comentado en el canal de dudas, se valora sobre todo la funcionalidad y estructura del código
+
 
 #### - Extras
 ##### - a ¿Qué funcionalidades le añadirías antes de subirla a la App Store?

@@ -29,6 +29,10 @@ class LibraryTableViewController: UITableViewController {
         self.title = "HackerBooks"
         self.edgesForExtendedLayout = .None
         
+        // Registro de la celda personalizada
+        let cellNib = UINib(nibName: "BookTableViewCell", bundle: nil)
+        self.tableView.registerNib(cellNib, forCellReuseIdentifier: "BookCell")
+
         // Botón para elegir ordenación Tag o Title
         let segment: UISegmentedControl = UISegmentedControl(items: [TAG, TITLE])
         segment.sizeToFit()
@@ -36,7 +40,7 @@ class LibraryTableViewController: UITableViewController {
         let frame = UIScreen.mainScreen().bounds
         segment.frame = CGRectMake(frame.minX + 5, frame.minY + 25,
                                     frame.width - 10, frame.height*0.05)
-        segment.layer.cornerRadius = 5.0
+//        segment.layer.cornerRadius = 5.0
 //        segment.backgroundColor = UIColor.blackColor()
 //        segment.tintColor = UIColor.whiteColor()
         segment.addTarget(self,
@@ -117,20 +121,21 @@ class LibraryTableViewController: UITableViewController {
         let item = book(forIndexPath: indexPath)
         
         // Crear la celda
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
-        
-        if cell == nil{
-            // El optional está vacío: hay que crear la celda a pelo
-            cell = UITableViewCell(style: .Subtitle,
-                                   reuseIdentifier: cellId)
-        }
+        let cell : BookTableViewCell = (tableView.dequeueReusableCellWithIdentifier(cellId, forIndexPath: indexPath) as? BookTableViewCell)!
         
         // Sincronizar book -> celda
-        cell?.imageView?.image = item.cover.getImage()
-        cell?.textLabel?.text  = item.title
-        cell?.detailTextLabel?.text = item.listOfAuthors()
+        cell.imageView?.image = item.cover.getImage()
+        cell.bookTitle.text = item.title
+        
+        // Mostrar condición de favorito en las listas
+        if item.isFavorite {
+            cell.isFavorite.setTitle("🌟", forState: .Normal)
+        }
+        else{
+            cell.isFavorite.setTitle("", forState: .Normal)
+        }
 
-        return cell!
+        return cell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
