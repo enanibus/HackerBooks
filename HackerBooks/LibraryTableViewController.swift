@@ -27,7 +27,23 @@ class LibraryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "HackerBooks"
-        self.edgesForExtendedLayout = .Bottom
+        self.edgesForExtendedLayout = .None
+        
+        // Botón para elegir ordenación Tag o Title
+        let segment: UISegmentedControl = UISegmentedControl(items: [TAG, TITLE])
+        segment.sizeToFit()
+        segment.selectedSegmentIndex = ORDER_BY_TAG
+        let frame = UIScreen.mainScreen().bounds
+        segment.frame = CGRectMake(frame.minX + 5, frame.minY + 25,
+                                    frame.width - 10, frame.height*0.05)
+        segment.layer.cornerRadius = 5.0
+//        segment.backgroundColor = UIColor.blackColor()
+//        segment.tintColor = UIColor.whiteColor()
+        segment.addTarget(self,
+                     action: #selector(switchOrderBy),
+                     forControlEvents: .ValueChanged)
+        self.navigationItem.titleView = segment
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,11 +87,25 @@ class LibraryTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return model.tagsCount
+        switch self.model.orderBy {
+            case ORDER_BY_TAG:
+                return model.tagsCount
+            case ORDER_BY_TITLE:
+                return 1
+            default:
+                return model.tagsCount
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.bookCountForTag(model.tags[section])
+        switch self.model.orderBy {
+            case ORDER_BY_TAG:
+                return model.bookCountForTag(model.tags[section])
+            case ORDER_BY_TITLE:
+                return model.booksCount
+            default:
+                return model.bookCountForTag(model.tags[section])
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -104,13 +134,26 @@ class LibraryTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch self.model.orderBy {
+            case ORDER_BY_TAG:
+                return model.tags[section].name.capitalizedString
+            case ORDER_BY_TITLE:
+                return LITERAL_SECTION_ORDER_BY_TITLE
+            default:
+                return model.tags[section].name.capitalizedString
+        }
         
-        return model.tags[section].name.capitalizedString
     }
         
     func book(forIndexPath indexPath: NSIndexPath)->Book{
-        
-        return model.bookAtIndex(indexPath.row, forTag: model.tags[indexPath.section])!
+        switch self.model.orderBy {
+            case ORDER_BY_TAG:
+                return model.bookAtIndex(indexPath.row, forTag: model.tags[indexPath.section])!
+            case ORDER_BY_TITLE:
+                return model.bookAtIndexBooksArray(indexPath.row)!
+            default:
+                return model.bookAtIndex(indexPath.row, forTag: model.tags[indexPath.section])!
+        }  
     }
     
     
@@ -144,6 +187,13 @@ class LibraryTableViewController: UITableViewController {
     }
     
     func imageDidChange(notification: NSNotification){
+        self.tableView.reloadData()
+    }
+    
+    //MARK: - Switch ORDER BY TAG / ORDER BY TITLE
+    
+    func switchOrderBy(sender: UISegmentedControl) {
+        self.model.orderBy = sender.selectedSegmentIndex
         self.tableView.reloadData()
     }
     

@@ -54,6 +54,10 @@ class Library {
         }
     }
     
+    // Switch ORDER BY
+    var orderBy: Int = ORDER_BY_TAG
+
+    
     //MARK: - Initialization
     
     init(){

@@ -59,6 +59,10 @@ En el método viewWillAppear de la clase AGTSimplePDFVIewController se suscribe 
 - En líneas generales, estoy muy contento del trabajo realizado, he aprendido muchísimo con esta práctica, y aunque creo que joven Padawan llego a ser, queda el largo y tortuoso camino de la Fuerza para alcanzar la meta de llegar a ser maestro Jedi
 
 
+#### - App Universal
+
+- Hacer la versión iPhone del lector
+
 #### - Extras
 ##### - a ¿Qué funcionalidades le añadirías antes de subirla a la App Store?
 *Se me ocurre la posibilidad de poder gestionar la librería, añadiendo y quitando libros. Además. podemos poner un UITabBarController en el Navigator que contiene la UIView de la tabla para añadir funcionalidades*
