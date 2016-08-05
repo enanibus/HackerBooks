@@ -12,6 +12,48 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    func rootViewControllerForPhone(withModel model: Library) -> UIViewController{
+        
+        // Crear un Library VC de Favoritos
+        let libVC = LibraryTableViewController(model: model)
+        
+        // Se mete Library VC en un Library Nav
+        let libNav = UINavigationController(rootViewController: libVC)
+        
+        // Asignar delegados
+        libVC.delegate = libVC
+        
+        return libNav
+        
+    }
+    
+    func rootViewControllerForPad(withModel model: Library) -> UIViewController {
+        
+        // Crear un Library VC de Favoritos
+        let libVC = LibraryTableViewController(model: model)
+        
+        // Se mete Library VC en un Library Nav
+        let libNav = UINavigationController(rootViewController: libVC)
+        
+        // Crear un Book VC
+        let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[0])!)
+        
+        // Se mete BookVC en un Book Nav
+        let bookNav = UINavigationController(rootViewController: bookVC)
+        
+        // Crear el Split View Controller
+        let splitVC = UISplitViewController()
+        splitVC.viewControllers = [libNav, bookNav]
+        
+        //poner el split como VC
+        window?.rootViewController = splitVC
+        
+        // Asignar delegados
+        libVC.delegate = bookVC
+        
+        return splitVC
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -32,27 +74,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Crear el modelo
         let model = Library()
         
-        // Crear un Library VC de Favoritos
-        let libVC = LibraryTableViewController(model: model)
+        var rootVC = UIViewController()
         
-        // Se mete Library VC en un Library Nav
-        let libNav = UINavigationController(rootViewController: libVC)
+        if (!(IS_IPHONE)) {
+            // Tableta
+            rootVC = self.rootViewControllerForPad(withModel: model)
+        } else {
+            rootVC = self.rootViewControllerForPhone(withModel: model)
+        }
         
-        // Crear un Book VC
-        let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[0])!)
+        self.window?.rootViewController = rootVC
         
-        // Se mete BookVC en un Book Nav
-        let bookNav = UINavigationController(rootViewController: bookVC)
-        
-        // Crear el Split View Controller
-        let splitVC = UISplitViewController()
-        splitVC.viewControllers = [libNav, bookNav]
-
-        //poner el split como VC
-        window?.rootViewController = splitVC
-        
-        // Asignar delegados
-        libVC.delegate = bookVC
+//        // Crear un Library VC de Favoritos
+//        let libVC = LibraryTableViewController(model: model)
+//        
+//        // Se mete Library VC en un Library Nav
+//        let libNav = UINavigationController(rootViewController: libVC)
+//        
+//        // Crear un Book VC
+//        let bookVC = BookViewController(model: model.bookAtIndex(0, forTag: model.tags[0])!)
+//        
+//        // Se mete BookVC en un Book Nav
+//        let bookNav = UINavigationController(rootViewController: bookVC)
+//        
+//        // Crear el Split View Controller
+//        let splitVC = UISplitViewController()
+//        splitVC.viewControllers = [libNav, bookNav]
+//
+//        //poner el split como VC
+//        window?.rootViewController = splitVC
+//        
+//        // Asignar delegados
+//        libVC.delegate = bookVC
         
         //Mostrar la window
         window?.makeKeyAndVisible()

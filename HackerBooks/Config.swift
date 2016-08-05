@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public let REMOTE_LIBRARY_URL                   =   "https://t.co/K9ziV0z3SJ"
 public let FAVORITES                            =   "favorites"
@@ -24,3 +25,4 @@ public let TITLE                                =   "Title"
 public let ORDER_BY_TAG                         =   0
 public let ORDER_BY_TITLE                       =   1
 public let LITERAL_SECTION_ORDER_BY_TITLE       =   "Books by Title"
+public let IS_IPHONE = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone

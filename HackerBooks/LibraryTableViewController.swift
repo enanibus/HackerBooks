@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibraryTableViewController: UITableViewController {
+class LibraryTableViewController: UITableViewController, LibraryTableViewControllerDelegate{
     
     //MARK: - Properties
     let model : Library
@@ -70,10 +70,20 @@ class LibraryTableViewController: UITableViewController {
         
     }
     
+    func libraryTableViewController(viewController: LibraryTableViewController, didSelectBook book: Book) {
+
+        let bookVC = BookViewController(model: book)
+        navigationController?.pushViewController(bookVC, animated: true)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Alta en notificacines de cambios en los modelos
+        if IS_IPHONE {
+            self.tableView.reloadData()
+        }
+        
+        // Alta en notificaciones de cambios en los modelos
         self.suscribeNotificationsFavoritesDidChange()
         
         self.subscribeNotificationsImageDidChange()
